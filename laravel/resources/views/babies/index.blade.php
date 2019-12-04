@@ -19,7 +19,7 @@
 								<tr>
 									<th scope="row">{{ $baby->id }}</th>
 									<td>{{ $baby->name }}</td>
-									<td><a href="/babies/{{ $baby->id }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a></td>
+									<td><a href="/babies/{{ $baby->id }}/edit" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a></td>
 								</tr>
 							@endforeach
 						</tbody>

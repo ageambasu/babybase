@@ -37,7 +37,15 @@ class BabiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => ['required', 'min:2', 'max:255']
+        ]);
+
+        $baby = new Baby();
+        $baby->name = request('name');
+        $baby->save();
+
+        return redirect('/babies');
     }
 
     /**
@@ -56,24 +64,34 @@ class BabiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Baby  $baby
+     * @param  \App\Baby  $baby->id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Baby $baby)
+    public function edit($id)
     {
-        //
+        $baby = Baby::find($id);
+
+        return view('babies.edit', ['baby' => $baby]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Baby  $baby
+     * @param  \App\Baby  $baby->id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Baby $baby)
+    public function update($id)
     {
-        //
+        request()->validate([
+            'name' => ['required', 'min:2', 'max:255']
+        ]);
+
+        $baby = Baby::find($id);
+        $baby->name = request('name');
+        $baby->save();
+
+        return redirect('/babies/' . $baby->id);
     }
 
     /**

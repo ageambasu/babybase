@@ -4,3 +4,7 @@
 -Finish all restful methods
 -Style forms https://getbootstrap.com/docs/4.0/components/input-group/
 -Alerts on rest actions https://getbootstrap.com/docs/4.0/components/alerts/
+-Add BACK buttons
+-Add LOGOUT button
+-Finish form fields (name, dob, etc) on all REST views
+-Implement all validations (update, create) on Controller

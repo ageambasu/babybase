@@ -16,5 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/babies', 'BabiesController@index');
+Route::post('/babies', 'BabiesController@store');
 Route::get('/babies/create', 'BabiesController@create');
 Route::get('/babies/{baby}', 'BabiesController@show');
+Route::get('/babies/{baby}/edit', 'BabiesController@edit');
+Route::put('/babies/{baby}', 'BabiesController@update');

@@ -10,16 +10,8 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Name</span>
 						</div>
-						<input type="text" class="form-control" placeholder="{{$baby->name}}">
+						<input type="text" class="form-control" placeholder="{{$baby->name}}" readonly >
 					</div>
-				</div>
-				<div class="col-3"></div>
-			</div>
-
-			<div class="row mt-4">
-				<div class="col-3"></div>
-				<div class="col-6">
-					<button class="btn btn-lg btn-outline-primary btn-block" type="submit">Submit</button>
 				</div>
 				<div class="col-3"></div>
 			</div>

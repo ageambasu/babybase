@@ -1,8 +1,9 @@
 @extends ('layout')
 
 @section ('content')
-	<form class="text-center" method="POST" action="/babies">
+	<form class="text-center" method="POST" action="/babies/{{$baby->id}}">
 		@csrf
+		@method('PUT')
 		<div class="container">
 			<div class="row">
 				<div class="col-3"></div>
@@ -11,7 +12,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text">Name</span>
 						</div>
-						<input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" required value="{{ old('name') }}">
+						<input type="text" class="form-control @error('name') is-invalid @enderror" value="{{$baby->name}}" required>
 						@error('name')
 							<div class="invalid-feedback">{{ $errors->first('name') }}</div>
 						@enderror
