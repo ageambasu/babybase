@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
+
+Route::get('/babies', 'BabiesController@index');
+Route::get('/babies/create', 'BabiesController@create');
+Route::get('/babies/{baby}', 'BabiesController@show');

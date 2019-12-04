@@ -1,0 +1,6 @@
+-Fix pagination
+-Implement login system
+-Implement submit edits
+-Finish all restful methods
+-Style forms https://getbootstrap.com/docs/4.0/components/input-group/
+-Alerts on rest actions https://getbootstrap.com/docs/4.0/components/alerts/

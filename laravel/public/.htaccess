@@ -23,14 +23,14 @@
 
 ### Force https, if not in localhost
 	RewriteEngine On
-	RewriteCond %{HTTP_HOST} !=andreea-l6vagrant   
+	RewriteCond %{HTTP_HOST} !=babylabvagrant   
 	RewriteCond %{HTTPS} !=on
 	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 ### Default www
 	RewriteEngine On
 	RewriteCond %{HTTP_HOST} !^www\. [NC]
-	RewriteCond %{HTTP_HOST} !^andreea-l6vagrant [NC]
+	RewriteCond %{HTTP_HOST} !^babylabvagrant [NC]
 	RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 
 ### Default folder
@@ -38,10 +38,10 @@
 	RewriteRule ^$ en [L]
 
 ### Password protected access on staging for testing purposes
-	SetEnvIf HOST "^andreea-l6.info" productionWWW
-	SetEnvIf HOST "^www.andreea-l6.info" production
-	SetEnvIf HOST "^staging.andreea-l6.info" staging
-	SetEnvIf HOST "^andreea-l6vagrant" local
+	SetEnvIf HOST "^babylab.info" productionWWW
+	SetEnvIf HOST "^www.babylab.info" production
+	SetEnvIf HOST "^staging.babylab.info" staging
+	SetEnvIf HOST "^babylabvagrant" local
 	Order Deny,Allow
 	AuthName "Restricted Area"
 	AuthType Basic
@@ -57,21 +57,6 @@
 	
 ### Alternate index files
 	DirectoryIndex index.html index.php index.html index.htm
-	
-	
-### Error pages
-	# Common error codes:
-	# 401 - Authorization Required
-	# 400 - Bad request
-	# 403 - Forbidden
-	# 500 - Internal Server Error
-	# 404 - Wrong page
-	ErrorDocument 400 /errors/400.shtml
-	ErrorDocument 401 /errors/401.shtml
-	ErrorDocument 403 /errors/403.shtml
-	ErrorDocument 404 /errors/404.shtml
-	ErrorDocument 404 /errors/404.html
-	ErrorDocument 500 /errors/500.shtml
 	
 	
 ### Expires Headers
