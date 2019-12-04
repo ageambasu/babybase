@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "shell", inline: <<-SHELL
         rm -rf /var/www/public
-        sudo sed -i s,/var/www/public,/var/www,g /etc/apache2/sites-available/000-default.conf
+        sudo sed -i s,/var/www/public,/var/www/laravel/public,g /etc/apache2/sites-available/000-default.conf
         sudo service apache2 restart
     SHELL
 
