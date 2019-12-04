@@ -1,5 +1,5 @@
-# andreea-l6.info
-andreea-l6.info website
+# BabyLab.info
+babylab.info website
 
 ## General Requirements
 * PHP >= 7.2
