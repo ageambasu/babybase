@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /errors/
+Disallow: /media/
+Sitemap: https://www.andreea-l6.info/sitemap.xml
