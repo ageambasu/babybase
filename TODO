@@ -1,10 +1,6 @@
 -Fix pagination
 -Implement login system
--Implement submit edits
--Finish all restful methods
--Style forms https://getbootstrap.com/docs/4.0/components/input-group/
--Alerts on rest actions https://getbootstrap.com/docs/4.0/components/alerts/
--Add BACK buttons
 -Add LOGOUT button
--Finish form fields (name, dob, etc) on all REST views
--Implement all validations (update, create) on Controller
+-Finish all restful methods (DESTROY)
+-Use lang on hardcoded text
+-Assign correct values to fields

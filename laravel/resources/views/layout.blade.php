@@ -14,7 +14,9 @@
     </head>
     <body>
         <header class="text-center">
-            <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
+            <a href="{{ route('babies.index') }}">
+                <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
+            </a>
         </header>
 
         @yield ('content')

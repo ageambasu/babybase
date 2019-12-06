@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/babies', 'BabiesController@index');
-Route::post('/babies', 'BabiesController@store');
-Route::get('/babies/create', 'BabiesController@create');
-Route::get('/babies/{baby}', 'BabiesController@show');
-Route::get('/babies/{baby}/edit', 'BabiesController@edit');
-Route::put('/babies/{baby}', 'BabiesController@update');
+Route::get('/babies', 'BabiesController@index')->name('babies.index');
+Route::post('/babies', 'BabiesController@store')->name('babies.store');
+Route::get('/babies/create', 'BabiesController@create')->name('babies.create');
+Route::get('/babies/{baby}', 'BabiesController@show')->name('babies.show');
+Route::get('/babies/{baby}/edit', 'BabiesController@edit')->name('babies.edit');
+Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update');

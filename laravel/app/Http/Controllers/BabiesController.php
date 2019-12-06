@@ -14,9 +14,10 @@ class BabiesController extends Controller
      */
     public function index()
     {
-        $babies = Baby::paginate(1);
+        $babies = Baby::paginate(10);
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
 
-        return view ('babies.index', ['babies' => $babies]);
+        return view ('babies.index', ['babies' => $babies, 'fieldsOnDatabase' => $fieldsOnDatabase]);
     }
 
     /**
@@ -26,7 +27,9 @@ class BabiesController extends Controller
      */
     public function create()
     {
-        return view('babies.create');
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
+
+        return view('babies.create', ['fieldsOnDatabase' => $fieldsOnDatabase]);
     }
 
     /**
@@ -37,61 +40,49 @@ class BabiesController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => ['required', 'min:2', 'max:255']
-        ]);
+        Baby::create($this->validateBaby());
 
-        $baby = new Baby();
-        $baby->name = request('name');
-        $baby->save();
-
-        return redirect('/babies');
+        return redirect(route('babies.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Baby  $baby->id
+     * @param  \App\Baby  $baby
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Baby $baby)
     {
-        $baby = Baby::find($id);
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
 
-        return view('babies.show', ['baby' => $baby]);
+        return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => $fieldsOnDatabase]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Baby  $baby->id
+     * @param  \App\Baby  $baby
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Baby $baby)
     {
-        $baby = Baby::find($id);
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
 
-        return view('babies.edit', ['baby' => $baby]);
+        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => $fieldsOnDatabase]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Baby  $baby->id
+     * @param  \App\Baby  $baby
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Baby $baby)
     {
-        request()->validate([
-            'name' => ['required', 'min:2', 'max:255']
-        ]);
+        $baby->update($this->validateBaby());
 
-        $baby = Baby::find($id);
-        $baby->name = request('name');
-        $baby->save();
-
-        return redirect('/babies/' . $baby->id);
+        return redirect(route('babies.index'));
     }
 
     /**
@@ -103,5 +94,46 @@ class BabiesController extends Controller
     public function destroy(Baby $baby)
     {
         //
+    }
+
+    /**
+     * Validates the submitted fields.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function validateBaby()
+    {
+        return request()->validate([
+            //Personal information
+            'name' => 'required|string|min:2|max:255',
+            'application_date' => 'required|date|date_format:Y-m-d',
+            'dob' => 'required|date',
+            'sex' => 'required',
+            'monolingual' => 'required',
+            'other_languages' => 'nullable|string|min:2|max:255',
+            'parent_firstname' => 'required|string|min:2|max:255',
+            'parent_lastname' => 'required|string|min:2|max:255',
+            'phone' =>  'required|numeric|digits_between:3,16',
+            'email' => 'required|email',
+            'street' => 'required|string|min:2|max:255',
+            'house_number' =>  'required|numeric',
+            'postcode' =>  'required|string|min:2|max:255',
+            'city' =>  'required|string|min:2|max:255',
+            'recruitment_source' =>  'required',
+
+            //Appointment information
+            'preferred_appointment_days' =>  'required',
+            'appointment_date' => 'required|date|date_format:Y-m-d',
+            'appointment_time' => 'required|date_format:H:i',
+            'appointment_number' => 'required|numeric',
+            'appointment_status' => 'required',
+
+            //Study information
+            'study_type' => 'required|string|min:2|max:255',
+            'study_name' => 'required|string|min:2|max:255',
+            'study_age_range' => 'required|numeric',
+            'prevous_studies_completed' => 'nullable|string|min:2|max:255',
+            'notes' => 'nullable|string|min:2|max:255',
+        ]);
     }
 }
