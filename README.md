@@ -11,7 +11,7 @@ babylab.info website
 * Node.js - [Install](https://nodejs.org/en/download/)
 
 ## Local Development Notes
-* Run `npm install` from your the local laravel directory on your OS to get the required modules.
+* Run `npm install` from the local laravel directory on your OS to get the required modules.
 * Run  `npm run watch` to get the latest changes on your compiled css file.
 * If you are using `artisan`, remember to run `php artisan` from the Laravel directory on your Virtual Machine (`vagrant ssh` and navigate to `/var/www/laravel/`).
 * Don't forget to setup your `/var/www/laravel/.env` file the first time you deploy.
