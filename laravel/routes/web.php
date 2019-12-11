@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+Auth::routes(['register' => false]);
+Route::get('/', 'HomeController@index')->name('auth.login');
 
 Route::get('/babies', 'BabiesController@index')->name('babies.index');
 Route::post('/babies', 'BabiesController@store')->name('babies.store');

@@ -34,7 +34,7 @@ class Baby extends Model
 		['house_number', 'number', '', true, true, false],
 		['postcode', 'text', '', true, true, false],
 		['city', 'text', '', true, true, true],
-		['recruitment_source', 'select', ['Newsletter', 'Direct traffic'], true, true, false],
+		['recruitment_source', 'select', ['Mail', 'Website', 'Flyer consultatiebureau', 'Flyer daycare', 'Friend', 'Facebook'], true, true, false],
 
 		//Appointment information
 		['preferred_appointment_days', 'select', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], true, true, false],
@@ -45,7 +45,7 @@ class Baby extends Model
 		['appointment_status', 'select', ['New', 'Contacted', 'In progress', 'Completed'], true, true, false],
 
 		//Study information
-		['study_type', 'text', '', true, true, false],
+		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, false],
 		['study_name', 'text', '', true, true, false],
 		['study_age_range', 'number', '', true, true, false],
 		['prevous_studies_completed', 'text', '', true, false, false],

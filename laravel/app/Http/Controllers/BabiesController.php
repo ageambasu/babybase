@@ -14,10 +14,7 @@ class BabiesController extends Controller
      */
     public function index()
     {
-        $babies = Baby::paginate(10);
-        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
-
-        return view ('babies.index', ['babies' => $babies, 'fieldsOnDatabase' => $fieldsOnDatabase]);
+        return view ('babies.index', ['babies' => Baby::paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
@@ -27,9 +24,7 @@ class BabiesController extends Controller
      */
     public function create()
     {
-        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
-
-        return view('babies.create', ['fieldsOnDatabase' => $fieldsOnDatabase]);
+        return view('babies.create', ['fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
@@ -53,9 +48,7 @@ class BabiesController extends Controller
      */
     public function show(Baby $baby)
     {
-        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
-
-        return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => $fieldsOnDatabase]);
+        return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
@@ -66,9 +59,7 @@ class BabiesController extends Controller
      */
     public function edit(Baby $baby)
     {
-        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
-
-        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => $fieldsOnDatabase]);
+        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
