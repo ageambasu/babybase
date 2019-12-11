@@ -20,8 +20,8 @@
             <div class="invalid-feedback" role="alert">{{ $message }}</div>
         @enderror
 
-         <label for="password-confirm" class="sr-only">{{ __('Confirm Password') }}</label>
-        <input id="password-confirm" type="password" class="form-control" name="password_password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirm Password') }}">
+        <label for="password-confirm" class="sr-only">{{ __('Confirm Password') }}</label>
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="{{ __('Confirm Password') }}">
 
         <button type="submit" class="mt-3 btn btn-lg btn-primary btn-block">{{ __('Reset Password') }}</button>
 

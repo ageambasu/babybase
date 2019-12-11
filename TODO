@@ -1,7 +1,5 @@
 -Fix pagination
--Implement login system
 -Add LOGOUT button
--Finish with HomeController
 -Remove views.layouts.app when not needed
 -Finish all restful methods (DESTROY)
 -Use lang on hardcoded text
