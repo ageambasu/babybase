@@ -10,8 +10,8 @@ body {
     background-color: $login-background-color !important;
 }
 
-#navbarDropdown {
-    padding-top: 1.5rem;
+.dropdown-menu.show {
+    min-width: 9.45rem;
 }
 
 .form-signin {
