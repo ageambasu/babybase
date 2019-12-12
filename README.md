@@ -13,5 +13,5 @@ babylab.info website
 ## Local Development Notes
 * Run `npm install` from the local laravel directory on your OS to get the required modules.
 * Run  `npm run watch` to get the latest changes on your compiled css file.
-* If you are using `artisan`, remember to run `php artisan` from the Laravel directory on your VM (`vagrant ssh` and navigate to `/var/www/laravel/`).
+* If you are using `artisan`, remember to run `php artisan` from the Laravel directory on your VM (`vagrant ssh` then navigate to `/var/www/laravel/`).
 * Don't forget to setup your `/var/www/laravel/.env` file the first time you deploy.

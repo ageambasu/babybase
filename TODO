@@ -3,3 +3,4 @@
 -Remove views.layouts.app when not needed
 -Finish all restful methods (DESTROY)
 -Use lang on hardcoded text
+-Enable js on webpack.mix.js

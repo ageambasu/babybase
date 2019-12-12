@@ -10,6 +10,10 @@ body {
     background-color: $login-background-color !important;
 }
 
+#navbarDropdown {
+    padding-top: 1.5rem;
+}
+
 .form-signin {
     width: 100%;
     max-width: 330px;
