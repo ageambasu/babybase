@@ -4,6 +4,8 @@ babylab.info website
 ## General Requirements
 * PHP >= 7.2
 * Composer - [Install](https://getcomposer.org/download/)
+* MySQL - [Install](https://www.mysql.com/downloads/)
+* Git - [Install](https://git-scm.com/downloads)
 
 ## Local Development Requirements
 * VirtualBox - [Install](https://www.virtualbox.org/wiki/Downloads)

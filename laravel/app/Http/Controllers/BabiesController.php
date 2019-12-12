@@ -115,7 +115,7 @@ class BabiesController extends Controller
             //Appointment information
             'preferred_appointment_days' =>  'required',
             'appointment_date' => 'required|date|date_format:Y-m-d',
-            'appointment_time' => 'required|date_format:H:i',
+            'appointment_time' => 'required',
             'appointment_number' => 'required|numeric',
             'appointment_status' => 'required',
 

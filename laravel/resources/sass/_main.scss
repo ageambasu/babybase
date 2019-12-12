@@ -63,3 +63,28 @@ body {
         font-size: 3.5rem;
     }
 }
+
+.custom-pagination {
+
+    nav { text-align: center; }
+
+    .page-link {
+        color: $info;
+
+        &:hover {
+            color: $info;
+        }
+    }
+
+    .page-item.active {
+
+        .page-link {
+            background-color: $info;
+            border-color: $info;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
