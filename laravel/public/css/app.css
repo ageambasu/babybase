@@ -5943,8 +5943,10 @@ body {
   background-color: #f5f5f5 !important;
 }
 
-.dropdown-menu.show {
-  min-width: 9.45rem;
+@media (min-width: 768px) {
+  .dropdown-menu.show {
+    min-width: 9.45rem;
+  }
 }
 
 .form-signin {
