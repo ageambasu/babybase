@@ -20,36 +20,40 @@
     </head>
 
     <body>
-        <header class="text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="col-6">
-                        @guest
-                            <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
-                        @else
-                            <a href="{{ route('babies.index') }}">
-                                <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
-                            </a>
-                        @endguest
-                    </div>
-                    <div class="col-3">
-                        @auth
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}</a>
+        <nav class="navbar navbar-expand-md navbar-light">
+            
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                @guest
+                    <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
+                @else
+                    <a href="{{ route('babies.index') }}">
+                        <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
+                    </a>
+                @endguest
+            </div>
+            
+            <div class="col-3">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @auth
+                        <div class="dropdown">
+                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}</a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
-                        @endauth
-                    </div>
+                        </div>
+                    @endauth
                 </div>
             </div>
-        </header>
+            
+        </nav>
 
         @yield ('content')
         

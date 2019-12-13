@@ -66,7 +66,7 @@
 
 		<div class="row">
 			<div class="col">
-				<div class="custom-pagination mb-4">
+				<div class="custom-pagination mb-4 d-flex justify-content-center">
 					{{ $babies->links() }}
 				</div>
 			</div>
