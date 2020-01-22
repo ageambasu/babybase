@@ -12,6 +12,7 @@
 			@php ($fieldOnForm = $fieldsOnDatabase[$i][3])
 			@php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
 			@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
+			@php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
 
 			<div class="row">
 				<div class="col-3"></div>

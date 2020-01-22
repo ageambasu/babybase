@@ -1,0 +1,15 @@
+/**
+ * Scope 1: Short term
+ */
+-Create admin role
+-Create route babies.destroy for admin only
+-Fix dob filter
+-Fix age_today filter
+-Fix babies.filter view
+-Enable register for admin only
+-Replace 'Example' mail sender
+
+/**
+ * Scope 2: Long term
+ */
+-Redesign database with pivot tables

@@ -67,15 +67,23 @@
 		<div class="row">
 			<div class="col">
 				<div class="custom-pagination mb-4 d-flex justify-content-center">
-					{{ $babies->links() }}
+					{{ $babies->appends(Request::all())->links() }}
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col">
-				<a href="/babies/create" class="btn btn-outline-info" role="button">
+				<a href="{{route('babies.create')}}" class="btn btn-outline-info mb-4" role="button">
 					<i class="fas fa-plus-circle"></i> Create a new record
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<a href="{{route('babies.filter')}}" class="btn btn-outline-info mb-4" role="button">
+					<i class="fas fa-plus-circle"></i> Create a new filter
 				</a>
 			</div>
 		</div>

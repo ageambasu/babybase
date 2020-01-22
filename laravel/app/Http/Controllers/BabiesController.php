@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Baby;
+use App\Filters\BabyFilters;
 use Illuminate\Http\Request;
 
 class BabiesController extends Controller
@@ -10,11 +11,12 @@ class BabiesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\BabyFilters  $filters
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BabyFilters $filters)
     {
-        return view ('babies.index', ['babies' => Baby::paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        return view ('babies.index', ['babies' => Baby::filter($filters)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
@@ -85,6 +87,35 @@ class BabiesController extends Controller
     public function destroy(Baby $baby)
     {
         //
+    }
+
+    /**
+     * Show the form for creating a new filter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter()
+    {
+        $babies = Baby::all();
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
+        $allValueTypes = [];
+
+        foreach ($fieldsOnDatabase as $key => $fieldOnDatabase) {
+
+            $fieldName = $fieldsOnDatabase[$key][0];
+            $babyValueTypes = [];
+
+            foreach ($babies as $baby) {
+                array_push($babyValueTypes, $baby->$fieldName);
+            }
+
+            $babyValueTypes = array_unique(array_map('strtolower', $babyValueTypes));
+            sort($babyValueTypes);
+            
+            $allValueTypes[$fieldName] = $babyValueTypes;
+        }
+
+        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
