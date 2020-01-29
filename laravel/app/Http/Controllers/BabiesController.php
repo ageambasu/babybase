@@ -12,11 +12,23 @@ class BabiesController extends Controller
      * Display a listing of the resource.
      *
      * @param  \App\Filters\BabyFilters  $filters
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(BabyFilters $filters)
+    public function index(BabyFilters $filters, Request $request)
     {
-        return view ('babies.index', ['babies' => Baby::filter($filters)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        $sortColumn = $request->get('sortColumn', null);
+        $sortOrder = $request->get('sortOrder', null);
+
+        if (isset($sortColumn) && $sortColumn != NULL && isset($sortOrder) && $sortOrder != NULL) {
+
+            return view ('babies.index', ['babies' => Baby::filter($filters)->orderBy($sortColumn, $sortOrder)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+
+        } else {
+            
+            return view ('babies.index', ['babies' => Baby::filter($filters)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        
+        }
     }
 
     /**
@@ -106,7 +118,12 @@ class BabiesController extends Controller
             $babyValueTypes = [];
 
             foreach ($babies as $baby) {
-                array_push($babyValueTypes, $baby->$fieldName);
+
+                if ($fieldName == 'age_today') {
+                    array_push($babyValueTypes, $baby->getBabyAgeToday());
+                } else {
+                    array_push($babyValueTypes, $baby->$fieldName);
+                }
             }
 
             $babyValueTypes = array_unique(array_map('strtolower', $babyValueTypes));

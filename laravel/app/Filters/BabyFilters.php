@@ -2,6 +2,9 @@
 
 namespace App\Filters;
 
+use Request;
+use Carbon\Carbon;
+
 class BabyFilters extends QueryFilter
 {
     /**
@@ -23,12 +26,46 @@ class BabyFilters extends QueryFilter
      * @param  $value
      * @return filtered data
      */
-    /*public function age_today($value = null)
+    public function age_today($value = null)
     {
-        if ($value) {
-            return $this->builder->where('age_today', $value);
+        $value = Request::input('age_today');
+
+        if (isset($value)) {
+
+            $dateToday = Carbon::now('Europe/Amsterdam');
+            
+            $calcMinDob = $dateToday->subYears($value);
+            $min_dob = $calcMinDob->format('Y-m-d'); //no older than
+
+            if ($value > 1) {
+
+                $maxYearValue = $value -1;
+
+                $calcMaxDob = $dateToday->subYears($maxYearValue);
+                $max_dob = $calcMaxDob->format('Y-m-d'); //no younger than
+
+                return $this->builder->where('dob', '<=', $min_dob)->where('dob', '>', $max_dob);
+            
+            } elseif ($value == 1) {
+
+                $maxYearValue = $value;
+
+                $calcMaxDob = $dateToday->subYears($maxYearValue);
+                $max_dob = $calcMaxDob->format('Y-m-d'); //no younger than
+
+                return $this->builder->where('dob', '<=', $min_dob)->where('dob', '>', $max_dob);
+            
+            } else {
+
+                $calcMinDob = $dateToday->subDays(364);
+                $min_dob = $calcMinDob->format('Y-m-d'); //no older than
+                
+                return $this->builder->where('dob', '>', $min_dob);
+
+            }
+            
         }
-    }*/
+    }
 
     /**
      * Returns the filtered values.

@@ -24,7 +24,7 @@ class Baby extends Model
 		['name', 'text', '', true, true, true, false],
 		['application_date', 'date', '', true, true, false, true],
 		['dob', 'date', '', true, true, false, true],
-		['age_today', 'number', '', false, false, true, false],
+		['age_today', 'number', '', false, false, true, true],
 		['sex', 'select', ['Female', 'Male'], true, true, true, true],
 		['monolingual', 'select', ['Yes', 'No'], true, true, true, true],
 		['other_languages', 'text', '', true, false, false, true],

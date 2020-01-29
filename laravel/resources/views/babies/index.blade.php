@@ -17,7 +17,29 @@
 									@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
 									
 									@if ($fieldOnIndex)
-										<th scope="col">{{ $fieldNameOnForm }}</th>
+
+										@if ($fieldName == 'age_today')
+											<th scope="col">
+												<a href="{{ route('babies.index', array_merge(Request::all(), ['sortColumn' => 'dob', 'sortOrder' => 'DESC'])) }}">
+													<i class="fas fa-sort-up"></i>
+												</a>
+												<a href="{{ route('babies.index', array_merge(Request::all(), ['sortColumn' => 'dob', 'sortOrder' => 'ASC'])) }}">
+													<i class="fas fa-sort-down"></i>
+												</a>
+												 {{ $fieldNameOnForm }}
+											</th>
+										@else
+											<th scope="col">
+												<a href="{{ route('babies.index', array_merge(Request::all(), ['sortColumn' => $fieldName, 'sortOrder' => 'ASC'])) }}">
+													<i class="fas fa-sort-up"></i>
+												</a>
+												<a href="{{ route('babies.index', array_merge(Request::all(), ['sortColumn' => $fieldName, 'sortOrder' => 'DESC'])) }}">
+													<i class="fas fa-sort-down"></i>
+												</a>
+												 {{ $fieldNameOnForm }}
+											</th>
+										@endif
+
 									@endif
 
 								@endfor
