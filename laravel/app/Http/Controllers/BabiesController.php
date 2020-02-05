@@ -93,12 +93,14 @@ class BabiesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Baby  $baby
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Baby $baby)
+    public function destroy($id)
     {
-        //
+        Baby::where('id', $id)->delete();
+
+        return redirect(route('babies.index'))->with('success','Baby deleted successfully.');
     }
 
     /**
@@ -107,6 +109,18 @@ class BabiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function filter()
+    {
+        $allValueTypes = $this->getAllValueTypes();
+
+        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+    }
+
+    /**
+     * Returns all babies value types.
+     *
+     * @return $allValueTypes
+     */
+    protected function getAllValueTypes()
     {
         $babies = Baby::all();
         $fieldsOnDatabase = Baby::$fieldsOnDatabase;
@@ -132,7 +146,7 @@ class BabiesController extends Controller
             $allValueTypes[$fieldName] = $babyValueTypes;
         }
 
-        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        return $allValueTypes;
     }
 
     /**

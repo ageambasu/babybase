@@ -62,7 +62,7 @@
 
             @guest
                 <div class="mb-5 text-muted">
-                    <p><small>Web Design by <a style="color:#9b9595" href="https://www.albertonieto.info/" target="_blank">albertonieto.info.</a></small></p>
+                    <p><small>Developed by <a style="color:#9b9595" href="https://www.albertonieto.info/" target="_blank">albertonieto.info.</a></small></p>
                 </div>
             @endguest
         </footer>

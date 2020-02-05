@@ -11,7 +11,7 @@
 |
 */
 
-Auth::routes(['register' => false]);
+Auth::routes();
 Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/babies/filter', 'BabiesController@filter')->name('babies.filter')->middleware('auth');
@@ -22,4 +22,4 @@ Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->
 Route::get('/babies/{baby}', 'BabiesController@show')->name('babies.show')->middleware('auth');
 Route::get('/babies/{baby}/edit', 'BabiesController@edit')->name('babies.edit')->middleware('auth');
 Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update')->middleware('auth');
-//Route::post('/babies', 'BabiesController@destroy')->name('babies.destroy')->middleware('auth');
+Route::delete('/babies/{baby}', 'BabiesController@destroy')->name('babies.destroy')->middleware('isAdmin');

@@ -75,8 +75,17 @@
 									@endfor
 
 									<td>
-										<a href="{{ route('babies.show', $baby) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
-										<a href="{{ route('babies.edit', $baby) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
+										<form action="{{ route('babies.destroy', $baby->id) }}" method="POST">
+											
+											<a href="{{ route('babies.show', $baby) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
+											<a href="{{ route('babies.edit', $baby) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
+
+											@csrf
+											@method('DELETE')
+											@if (Auth::user()->isAdmin())
+												<button class="btn btn-outline-danger" role="button" type="submit"><i class="fas fa-ban"></i> Delete</button>
+											@endif
+										</form>
 									</td>
 								</tr>
 							@endforeach
