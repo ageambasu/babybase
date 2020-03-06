@@ -32,6 +32,8 @@ Route::get('/studies/{study}/edit', 'StudiesController@edit')->name('studies.edi
 Route::put('/studies/{study}', 'StudiesController@update')->name('studies.update')->middleware('auth');
 Route::delete('/studies/{study}', 'StudiesController@destroy')->name('studies.destroy')->middleware('isAdmin');
 
+//Route::get('/babies/{baby}/{study}/edit', 'BabiesController@edit')->name('babies.edit')->middleware('auth');
+
 Route::get('/users', 'UsersController@index')->name('users.index')->middleware('isAdmin');
 Route::post('/users', 'UsersController@store')->name('users.store')->middleware('isAdmin');
 Route::get('/users/create', 'UsersController@create')->name('users.create')->middleware('isAdmin');

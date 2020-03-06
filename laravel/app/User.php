@@ -44,6 +44,6 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {   
-        return (\Auth::check() && $this->email == 'test@test.test'); //hardcoded for testing purposes
+        return (\Auth::check() && $this->isAdmin == TRUE);
     }
 }

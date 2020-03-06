@@ -42,6 +42,49 @@
 			
 		@endfor
 
+		<br>
+
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 class="display-5 text-center">Previous studies completed</h1>
+			</div>
+			<div class="col-3"></div>
+		</div>
+
+		@foreach ($baby->studies as $study)
+			@for ($i = 0; $i < count($studyFieldsOnDatabase); $i++)
+
+				@php ($stuydFieldName = $studyFieldsOnDatabase[$i][0])
+				@php ($stuydFieldNameOnForm = ucfirst(str_replace ("_", " ", $stuydFieldName)))
+				@php ($stuydFieldType = $studyFieldsOnDatabase[$i][1])
+				@php ($stuydFieldValues = $studyFieldsOnDatabase[$i][2])
+				@php ($stuydFieldOnForm = $studyFieldsOnDatabase[$i][3])
+				@php ($stuydFieldRequiredOnForm = $studyFieldsOnDatabase[$i][4])
+				@php ($stuydFieldOnIndex = $studyFieldsOnDatabase[$i][5])
+				@php ($stuydFieldOnFilter = $studyFieldsOnDatabase[$i][6])
+
+				<div class="row">
+					<div class="col-3"></div>
+					<div class="col-6">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">{{ $stuydFieldNameOnForm }}</span>
+							</div>
+
+							<input type="{{ $stuydFieldType }}" class="form-control" name="{{ $stuydFieldName }}" value="{{ $study->$stuydFieldName }}" readonly>
+
+						</div>
+					</div>
+					<div class="col-3"></div>
+				</div>
+				
+			@endfor
+
+			<br>
+		@endforeach
+			
+
 		<div class="row mt-4">
 			<div class="col-3"></div>
 			<div class="col-6">

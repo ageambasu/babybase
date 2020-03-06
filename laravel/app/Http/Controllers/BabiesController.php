@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Baby;
 use App\Filters\BabyFilters;
+use App\Study;
 use Illuminate\Http\Request;
 
 class BabiesController extends Controller
@@ -62,7 +63,7 @@ class BabiesController extends Controller
      */
     public function show(Baby $baby)
     {
-        return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studyFieldsOnDatabase' => Study::$fieldsOnDatabase]);
     }
 
     /**

@@ -112,4 +112,15 @@ class Baby extends Model
     {
         return $filters->apply($query);
     }
+
+    /**
+     * Returns all the studies linked to the baby.
+     *
+     * @param  \App\Baby  $baby
+     * @return collection of studies for the selected baby
+     */
+    public function studies()
+    {
+        return $this->belongsToMany(Study::class);
+    }
 }

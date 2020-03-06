@@ -6020,3 +6020,9 @@ body {
   color: white;
 }
 
+.display-5 {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 2;
+}
+
