@@ -74,7 +74,13 @@ class BabiesController extends Controller
      */
     public function edit(Baby $baby)
     {
-        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        $babyStudiesIds = [];
+        
+        foreach ($baby->studies as $study) {
+            array_push($babyStudiesIds, $study->id);
+        }
+
+        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studies' => Study::all(), 'babyStudiesIds' => $babyStudiesIds]);
     }
 
     /**
@@ -86,7 +92,11 @@ class BabiesController extends Controller
      */
     public function update(Baby $baby)
     {
-        $baby->update($this->validateBaby());
+        $this->validateBaby();
+
+        $baby->update();
+
+        $baby->studies()->sync(request('studies'));
 
         return redirect(route('babies.index'));
     }
@@ -188,6 +198,8 @@ class BabiesController extends Controller
             'study_age_range' => 'required|numeric',
             'prevous_studies_completed' => 'nullable|string|min:2|max:255',
             'notes' => 'nullable|string|min:2|max:255',
+
+            'studies' => 'exists:studies,id',
         ]);
     }
 }

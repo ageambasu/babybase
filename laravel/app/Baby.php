@@ -121,6 +121,6 @@ class Baby extends Model
      */
     public function studies()
     {
-        return $this->belongsToMany(Study::class);
+        return $this->belongsToMany(Study::class)->withTimestamps();
     }
 }

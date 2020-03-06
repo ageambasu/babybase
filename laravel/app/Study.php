@@ -53,6 +53,6 @@ class Study extends Model
      */
     public function babies()
     {
-        return $this->belongsToMany(Baby::class);
+        return $this->belongsToMany(Baby::class)->withTimestamps();
     }
 }

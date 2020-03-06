@@ -13,3 +13,5 @@
 -Replace hardcoded 'test@test.test' in User::isAdmin
 -Create languages table?
 -Create appointments table?
+-Pivot baby_note_study + drop studies.note
+-User controller
