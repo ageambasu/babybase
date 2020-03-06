@@ -3,10 +3,10 @@ babylab.info website
 
 ## General Requirements
 * PHP >= 7.2
-* Composer - [Install](https://getcomposer.org/download/)
-* MySQL - [Install](https://www.mysql.com/downloads/)
-* Node.js - [Install](https://nodejs.org/en/download/)
-* Git - [Install](https://git-scm.com/downloads)
+* Composer >= 1.6.3 - [Install](https://getcomposer.org/download/)
+* MySQL >= 5.7.21 - [Install](https://www.mysql.com/downloads/)
+* Node.js >= 13.8.0 - [Install](https://nodejs.org/en/download/)
+* Git >= 2.14.1 - [Install](https://git-scm.com/downloads)
 
 ## Local Development Requirements
 * VirtualBox - [Install](https://www.virtualbox.org/wiki/Downloads)

@@ -23,3 +23,19 @@ Route::get('/babies/{baby}', 'BabiesController@show')->name('babies.show')->midd
 Route::get('/babies/{baby}/edit', 'BabiesController@edit')->name('babies.edit')->middleware('auth');
 Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update')->middleware('auth');
 Route::delete('/babies/{baby}', 'BabiesController@destroy')->name('babies.destroy')->middleware('isAdmin');
+
+Route::get('/studies', 'StudiesController@index')->name('studies.index')->middleware('auth');
+Route::post('/studies', 'StudiesController@store')->name('studies.store')->middleware('auth');
+Route::get('/studies/create', 'StudiesController@create')->name('studies.create')->middleware('auth');
+Route::get('/studies/{study}', 'StudiesController@show')->name('studies.show')->middleware('auth');
+Route::get('/studies/{study}/edit', 'StudiesController@edit')->name('studies.edit')->middleware('auth');
+Route::put('/studies/{study}', 'StudiesController@update')->name('studies.update')->middleware('auth');
+Route::delete('/studies/{study}', 'StudiesController@destroy')->name('studies.destroy')->middleware('isAdmin');
+
+Route::get('/users', 'UsersController@index')->name('users.index')->middleware('isAdmin');
+Route::post('/users', 'UsersController@store')->name('users.store')->middleware('isAdmin');
+Route::get('/users/create', 'UsersController@create')->name('users.create')->middleware('isAdmin');
+Route::get('/users/{user}', 'UsersController@show')->name('users.show')->middleware('isAdmin');
+Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit')->middleware('isAdmin');
+Route::put('/users/{user}', 'UsersController@update')->name('users.update')->middleware('isAdmin');
+Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy')->middleware('isAdmin');

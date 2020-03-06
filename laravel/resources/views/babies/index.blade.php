@@ -75,7 +75,7 @@
 									@endfor
 
 									<td>
-										<form action="{{ route('babies.destroy', $baby->id) }}" method="POST">
+										<form action="{{ route('babies.destroy', $baby->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete the selected record?');">
 											
 											<a href="{{ route('babies.show', $baby) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 											<a href="{{ route('babies.edit', $baby) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
