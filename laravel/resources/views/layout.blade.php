@@ -16,12 +16,21 @@
 
         <link rel="icon" type="image/png" href="{{ asset('images/babylab.ico') }}"/>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var url = window.location;
+                $('ul.navbar-nav a[href="'+ url +'"]').parent().addClass('active');
+                $('ul.navbar-nav a').filter(function() {
+                    return this.href == url;
+                }).parent().addClass('active');
+            });
+        </script>
+
         @yield ('head')
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-md navbar-light">
-            
+        <nav class="navbar navbar-expand-md navbar-light">            
             <div class="col-3"></div>
             <div class="col-6 text-center">
                 @guest
@@ -31,29 +40,47 @@
                         <img class="mb-4" src="{{ asset('images/babylab.svg') }}" alt="" width="72" height="72">
                     </a>
                 @endguest
-            </div>
-            
-            <div class="col-3">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    @auth
-                        <div class="dropdown">
-                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}</a>
+            </div> 
+            <div class="col-3"></div>           
+        </nav>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+        @auth
+            <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('babies.index')}}">Babies</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('studies.index')}}">Studies</a>
+                                    </li>
+                                    @if (Auth::user()->isAdmin())
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('users.index')}}">Users</a>
+                                        </li>
+                                    @endif
+                                </ul>                                    
                             </div>
                         </div>
-                    @endauth
+                    </div>
                 </div>
-            </div>
-            
-        </nav>
+            </nav>
+        @endauth
 
         @yield ('content')
         
