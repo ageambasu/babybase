@@ -11,3 +11,4 @@
 -Pivot baby_note_study + drop studies.note?
 -Remove duplicated fields on different models
 -Fix UsersController@Update
+-Retrieve isAdmin checkbox
