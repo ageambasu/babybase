@@ -11,3 +11,5 @@
 -Create appointments table?
 -Pivot baby_note_study + drop studies.note?
 -Remove duplicated fields on different models
+-Navigation menu to reach views
+-Fix UsersController@Update

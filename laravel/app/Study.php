@@ -19,7 +19,6 @@ class Study extends Model
 	static $fieldOnIndex = 5;
     static $fieldOnFilter = 6;
 	static $fieldsOnDatabase = [
-		//Study information
 		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, true, false],
 		['study_name', 'text', '', true, true, true, false],
 		['study_age_range_start', 'number', '', true, true, true, false],

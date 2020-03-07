@@ -23,10 +23,9 @@ class User extends Authenticatable
     static $fieldOnIndex = 5;
     static $fieldOnFilter = 6;
     static $fieldsOnDatabase = [
-        //Study information
         ['name', 'text', '', true, true, true, false],
         ['email', 'email', '', true, true, true, false],
-        ['isAdmin', 'checkbox', '', true, true, true, false],
+        ['isAdmin', 'checkbox', '', true, false, true, false],
     ];
 
     /**
@@ -35,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'isAdmin',
     ];
 
     /**
