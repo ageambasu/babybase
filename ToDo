@@ -2,16 +2,12 @@
  * Scope 1: Short term
  */
 -Fix dob filter (by year)
--Add confirmation on babies.destroy
 
 /**
  * Scope 2: Long term
  */
--Redesign database with pivot tables
--Include users table and view
--Include roles and users-roles tables
--Replace hardcoded 'test@test.test' in User::isAdmin
+-Finish User (MCV)
 -Create languages table?
 -Create appointments table?
--Pivot baby_note_study + drop studies.note
--User controller
+-Pivot baby_note_study + drop studies.note?
+-Remove duplicated fields on different models

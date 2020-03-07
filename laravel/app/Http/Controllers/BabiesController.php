@@ -92,9 +92,11 @@ class BabiesController extends Controller
      */
     public function update(Baby $baby)
     {
-        $this->validateBaby();
+        $validatedAttributes = $this->validateBaby();
 
-        $baby->update();
+        unset( $validatedAttributes['studies'] ); //Not saving 'studies' on babies table
+
+        $baby->update($validatedAttributes);
 
         $baby->studies()->sync(request('studies'));
 

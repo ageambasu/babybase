@@ -20,10 +20,10 @@ class Study extends Model
     static $fieldOnFilter = 6;
 	static $fieldsOnDatabase = [
 		//Study information
-		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, false, true],
-		['study_name', 'text', '', true, true, false, true],
-		['study_age_range_start', 'number', '', true, true, false, true],
-		['study_age_range_end', 'number', '', true, true, false, true],
+		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, true, false],
+		['study_name', 'text', '', true, true, true, false],
+		['study_age_range_start', 'number', '', true, true, true, false],
+		['study_age_range_end', 'number', '', true, true, true, false],
 		['notes', 'text', '', true, false, false, false],
     ];
 

@@ -11,6 +11,25 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * The dataframe equivalent.
+     *
+     * @var array
+     */
+    static $fieldName = 0;
+    static $fieldType = 1;
+    static $fieldValues = 2;
+    static $fieldOnForm = 3;
+    static $fieldRequiredOnForm = 4;
+    static $fieldOnIndex = 5;
+    static $fieldOnFilter = 6;
+    static $fieldsOnDatabase = [
+        //Study information
+        ['name', 'text', '', true, true, true, false],
+        ['email', 'email', '', true, true, true, false],
+        ['isAdmin', 'checkbox', '', true, true, true, false],
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -45,5 +64,16 @@ class User extends Authenticatable
     public function isAdmin()
     {   
         return (\Auth::check() && $this->isAdmin == TRUE);
+    }
+
+    /**
+     * Returns the url path for the instance.
+     *
+     * @param  \App\User  $user
+     * @return url path
+     */
+    public function path()
+    {
+        return route('users.show', $this);
     }
 }
