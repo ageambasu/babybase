@@ -1,18 +1,17 @@
 /**
  * Scope 1: Short term
  */
--Fix dob filter (by year)
--Move head js to app.js
+-Move layout.blade & users.edit.blade js to app.js
 
 /**
  * Scope 2: Mid term
  */
--Remove duplicated fields on different models
+-Modify Filter to include pivot tables?
+-Pivot baby_note_study + drop studies.note?
+-Filter dob (by #months)?
 
 /**
  * Scope 3: Long term
  */
 -Create languages table?
 -Create appointments table?
--Pivot baby_note_study + drop studies.note?
--Modify Filter to include pivot tables?

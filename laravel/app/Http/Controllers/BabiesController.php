@@ -100,7 +100,8 @@ class BabiesController extends Controller
 
         $baby->studies()->sync(request('studies'));
 
-        return redirect(route('babies.show', $baby));
+        //return redirect(route('babies.show', $baby));
+        return redirect(route('babies.index'));
     }
 
     /**
@@ -193,13 +194,6 @@ class BabiesController extends Controller
             'appointment_time' => 'required',
             'appointment_number' => 'required|numeric',
             'appointment_status' => 'required',
-
-            //Study information
-            'study_type' => 'required|string|min:2|max:255',
-            'study_name' => 'required|string|min:2|max:255',
-            'study_age_range' => 'required|numeric',
-            'prevous_studies_completed' => 'nullable|string|min:2|max:255',
-            'notes' => 'nullable|string|min:2|max:255',
 
             'studies' => 'exists:studies,id',
         ]);
