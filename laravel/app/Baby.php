@@ -45,13 +45,6 @@ class Baby extends Model
 		['age_at_appointment', 'number', '', false, false, false, false],
 		['appointment_number', 'number', '', true, true, false, true],
 		['appointment_status', 'select', ['New', 'Contacted', 'In progress', 'Completed'], true, true, false, true],
-
-		//Study information
-		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, false, true],
-		['study_name', 'text', '', true, true, false, true],
-		['study_age_range', 'number', '', true, true, false, true],
-		['prevous_studies_completed', 'text', '', true, false, false, true],
-		['notes', 'text', '', true, false, false, false],
     ];
 
 	/**

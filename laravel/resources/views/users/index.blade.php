@@ -86,7 +86,7 @@
 
 		<div class="row">
 			<div class="col">
-				<a href="/register" class="btn btn-outline-info mb-4" role="button">
+				<a href="{{route('users.create')}}" class="btn btn-outline-info mb-4" role="button">
 					<i class="fas fa-plus-circle"></i> Create a new record
 				</a>
 			</div>

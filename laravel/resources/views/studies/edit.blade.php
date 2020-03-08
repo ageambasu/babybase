@@ -60,6 +60,37 @@
 				
 			@endfor
 
+			<div class="row">
+				<div class="col-3"></div>
+				<div class="col-6">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Babies</span>
+						</div>
+
+						<select multiple class="custom-select form-control @error('babies') is-invalid @enderror" name="babies[]">
+
+							@foreach($babies as $baby)
+									
+									@if( in_array( $baby->id, $babyStudiesIds ) )
+										<option value="{{ $baby->id }}" selected>{{ $baby->name }}, {{ $baby->email }}</option>
+									@else
+										<option value="{{ $baby->id }}">{{ $baby->name }}, {{ $baby->email }}</option>
+									@endif
+
+							@endforeach
+
+						</select>
+
+						@error('babies')
+							<div class="invalid-feedback">{{ $message }}</div>
+						@enderror
+
+					</div>
+				</div>
+				<div class="col-3"></div>
+			</div>
+
 			<div class="row mt-4">
 				<div class="col-3"></div>
 				<div class="col-6">

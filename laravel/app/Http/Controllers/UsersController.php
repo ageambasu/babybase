@@ -47,7 +47,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $this->validateUser();
 
         User::create([
@@ -93,7 +93,7 @@ class UsersController extends Controller
     {
         $validatedAttributes = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users'.$user->id,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id . ',id',
             'isAdmin' => 'boolean',
         ]);
 
@@ -134,7 +134,7 @@ class UsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'isAdmin' => 'boolean',
+            'isAdmin' => 'required|boolean',
         ]);
     }
 }

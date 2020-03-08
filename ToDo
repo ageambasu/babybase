@@ -2,13 +2,17 @@
  * Scope 1: Short term
  */
 -Fix dob filter (by year)
+-Move head js to app.js
 
 /**
- * Scope 2: Long term
+ * Scope 2: Mid term
+ */
+-Remove duplicated fields on different models
+
+/**
+ * Scope 3: Long term
  */
 -Create languages table?
 -Create appointments table?
 -Pivot baby_note_study + drop studies.note?
--Remove duplicated fields on different models
--Fix UsersController@Update
--Retrieve isAdmin checkbox
+-Modify Filter to include pivot tables?

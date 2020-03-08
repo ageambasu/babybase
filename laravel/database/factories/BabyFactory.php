@@ -30,12 +30,5 @@ $factory->define(Baby::class, function (Faker $faker) {
         'appointment_time' => '13:15',
         'appointment_number' => $faker->randomNumber(1),
         'appointment_status' => ['open', 'closed'][rand(0,1)],
-
-        //Study information
-        'study_type' => ['linguistics', 'pedagogy', 'NIRS'][rand(0,2)],
-        'study_name' => $faker->sentence,
-        'study_age_range' => $faker->randomNumber(1),
-        'prevous_studies_completed' => $faker->sentence,
-        'notes' => $faker->sentence,
     ];
 });

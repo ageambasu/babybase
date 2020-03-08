@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Baby;
 use App\Study;
 use Illuminate\Http\Request;
 
@@ -60,7 +61,7 @@ class StudiesController extends Controller
      */
     public function show(Study $study)
     {
-        return view('studies.show', ['study' => $study, 'fieldsOnDatabase' => Study::$fieldsOnDatabase]);
+        return view('studies.show', ['study' => $study, 'fieldsOnDatabase' => Study::$fieldsOnDatabase, 'babyFieldsOnDatabase' => Baby::$fieldsOnDatabase]);
     }
 
     /**
@@ -71,7 +72,13 @@ class StudiesController extends Controller
      */
     public function edit(Study $study)
     {
-        return view('studies.edit', ['study' => $study, 'fieldsOnDatabase' => Study::$fieldsOnDatabase]);
+        $babyStudiesIds = [];
+        
+        foreach ($study->babies as $baby) {
+            array_push($babyStudiesIds, $baby->id);
+        }
+
+        return view('studies.edit', ['study' => $study, 'fieldsOnDatabase' => Study::$fieldsOnDatabase, 'babies' => Baby::all(), 'babyStudiesIds' => $babyStudiesIds]);
     }
 
     /**
@@ -85,9 +92,13 @@ class StudiesController extends Controller
     {
         $validatedAttributes = $this->validateStudy();
 
+        unset( $validatedAttributes['babies'] ); //Not saving 'babies' on studies table
+
         $study->update($validatedAttributes);
 
-        return redirect(route('studies.index'));
+        $study->babies()->sync(request('babies'));
+
+        return redirect(route('studies.show', $study));
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Baby;
-use App\Filters\BabyFilters;
 use App\Study;
+use App\Filters\BabyFilters;
 use Illuminate\Http\Request;
 
 class BabiesController extends Controller
@@ -100,7 +100,7 @@ class BabiesController extends Controller
 
         $baby->studies()->sync(request('studies'));
 
-        return redirect(route('babies.index'));
+        return redirect(route('babies.show', $baby));
     }
 
     /**

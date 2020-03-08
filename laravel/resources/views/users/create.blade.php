@@ -42,6 +42,11 @@
 										</select>
 									@break
 
+									@case('checkbox')
+										<input type="hidden" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" value="0">
+										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
+									@break
+
 									@default
 										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
 								

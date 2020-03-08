@@ -64,24 +64,27 @@
 				@php ($stuydFieldOnIndex = $studyFieldsOnDatabase[$i][5])
 				@php ($stuydFieldOnFilter = $studyFieldsOnDatabase[$i][6])
 
-				<div class="row">
-					<div class="col-3"></div>
-					<div class="col-6">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text">{{ $stuydFieldNameOnForm }}</span>
+				@if($stuydFieldName == 'study_name')
+					<div class="row">
+						<div class="col-3"></div>
+						<div class="col-6">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">{{ $stuydFieldNameOnForm }}</span>
+								</div>
+
+								<input type="{{ $stuydFieldType }}" class="form-control" name="{{ $stuydFieldName }}" value="{{ $study->$stuydFieldName }}" readonly>
+
+								<a href="{{ route('studies.show', $study) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
+
 							</div>
-
-							<input type="{{ $stuydFieldType }}" class="form-control" name="{{ $stuydFieldName }}" value="{{ $study->$stuydFieldName }}" readonly>
-
 						</div>
+						<div class="col-3"></div>
 					</div>
-					<div class="col-3"></div>
-				</div>
+				@endif
 				
 			@endfor
 
-			<br>
 		@empty
 			<div class="row">
 				<div class="col-3"></div>

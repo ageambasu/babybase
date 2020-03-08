@@ -43,6 +43,22 @@
 										</select>
 									@break
 
+									@case('checkbox')
+										<script type="text/javascript">
+											$(document).ready(function () {
+												$('input[type="checkbox"]').on('change', function(e){
+													if($(this).prop('checked')) {
+														$(this).next().val(1);
+													} else {
+														$(this).next().val(0);
+													}
+												});
+											});
+										</script>
+										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} {{ (($user->$fieldName == 1) ? "checked":"") }} value="{{ $user->$fieldName }}">
+										<input type="hidden" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" value="{{ $user->$fieldName }}">
+									@break
+
 									@default
 										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $user->$fieldName }}">
 								
