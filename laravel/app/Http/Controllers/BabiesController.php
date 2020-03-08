@@ -195,6 +195,8 @@ class BabiesController extends Controller
             'appointment_number' => 'required|numeric',
             'appointment_status' => 'required',
 
+            'notes' => 'nullable|string|min:2|max:255',
+
             'studies' => 'exists:studies,id',
         ]);
     }

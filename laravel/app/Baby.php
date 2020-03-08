@@ -45,6 +45,8 @@ class Baby extends Model
 		['age_at_appointment', 'number', '', false, false, false, false],
 		['appointment_number', 'number', '', true, true, false, true],
 		['appointment_status', 'select', ['New', 'Contacted', 'In progress', 'Completed'], true, true, false, true],
+
+        ['notes', 'text', '', true, false, false, false],
     ];
 
 	/**
