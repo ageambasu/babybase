@@ -1,7 +1,7 @@
 ### Laravel public	
 	RewriteEngine on
-	RewriteRule ^$ laravel/public/ [L]
-	RewriteRule (.*) laravel/public/$1 [L]
+	RewriteRule ^$ babylab/laravel/public/ [L]
+	RewriteRule (.*) babylab/laravel/public/$1 [L]
 
 ### Default folder
 	RewriteEngine on
