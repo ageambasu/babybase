@@ -22,37 +22,37 @@
 	</IfModule>
 
 ### Force https, if not in localhost
-	RewriteEngine On
-	RewriteCond %{HTTP_HOST} !=babylabvagrant   
-	RewriteCond %{HTTPS} !=on
-	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+	#RewriteEngine On
+	#RewriteCond %{HTTP_HOST} !=babylabvagrant   
+	#RewriteCond %{HTTPS} !=on
+	#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 ### Default www
-	RewriteEngine On
-	RewriteCond %{HTTP_HOST} !^www\. [NC]
-	RewriteCond %{HTTP_HOST} !^babylabvagrant [NC]
-	RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+	#RewriteEngine On
+	#RewriteCond %{HTTP_HOST} !^www\. [NC]
+	#RewriteCond %{HTTP_HOST} !^babylabvagrant [NC]
+	#RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
 
 ### Default folder
 	RewriteEngine on
 	RewriteRule ^$ en [L]
 
 ### Password protected access on staging for testing purposes
-	SetEnvIf HOST "^babylab.info" productionWWW
-	SetEnvIf HOST "^www.babylab.info" production
-	SetEnvIf HOST "^staging.babylab.info" staging
-	SetEnvIf HOST "^babylabvagrant" local
-	Order Deny,Allow
-	AuthName "Restricted Area"
-	AuthType Basic
-	AuthUserFile .htpasswd
+	#SetEnvIf HOST "^babylab.info" productionWWW
+	#SetEnvIf HOST "^www.babylab.info" production
+	#SetEnvIf HOST "^staging.babylab.info" staging
+	#SetEnvIf HOST "^babylabvagrant" local
+	#Order Deny,Allow
+	#AuthName "Restricted Area"
+	#AuthType Basic
+	#AuthUserFile .htpasswd
 	#AuthGroupFile /
-	Require valid-user
-	Deny from all
-	Allow from env=local
-	Allow from env=productionWWW
-	Allow from env=production
-	Satisfy any
+	#Require valid-user
+	#Deny from all
+	#Allow from env=local
+	#Allow from env=productionWWW
+	#Allow from env=production
+	#Satisfy any
 	
 	
 ### Alternate index files
