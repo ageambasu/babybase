@@ -15,3 +15,4 @@
  */
 -Create languages table?
 -Create appointments table?
+-Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
