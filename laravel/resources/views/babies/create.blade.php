@@ -42,6 +42,18 @@
 										</select>
 									@break
 
+									@case('multiselect')
+										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}[]" multiple="multiple">
+
+											@foreach($fieldValues as $key => $fieldValue)
+
+												<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
+
+											@endforeach
+
+										</select>
+									@break
+
 									@default
 										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
 								

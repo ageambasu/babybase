@@ -1,6 +1,7 @@
 @extends ('layout')
 
 @section ('content')
+
 	<div class="container">
 
 		@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
@@ -28,7 +29,9 @@
 							@break
 
 							@case('age_at_appointment')
-								<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeAtAppointment() }}" readonly>
+								@if($baby->appointment_date)
+									<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeAtAppointment() }}" readonly>
+								@endif
 							@break
 
 							@default

@@ -24,7 +24,7 @@ class Baby extends Model
 		['name', 'text', '', true, true, true, false],
 		['application_date', 'date', '', true, true, false, true],
 		['dob', 'date', '', true, true, false, true],
-		['age_today', 'number', '', false, false, true, true],
+		['age_today', 'text', '', false, false, true, true],
 		['sex', 'select', ['Female', 'Male'], true, true, true, true],
 		['monolingual', 'select', ['Yes', 'No'], true, true, true, true],
 		['other_languages', 'text', '', true, false, false, true],
@@ -32,17 +32,17 @@ class Baby extends Model
 		['parent_lastname', 'text', '', true, true, false, false],
 		['phone', 'tel', '', true, true, false, false],
 		['email', 'email', '', true, true, false, false],
-		['street', 'text', '', true, true, false, false],
-		['house_number', 'number', '', true, true, false, false],
-		['postcode', 'text', '', true, true, false, true],
-		['city', 'text', '', true, true, true, true],
+		['street', 'text', '', true, false, false, false],
+		['house_number', 'number', '', true, false, false, false],
+		['postcode', 'text', '', true, false, false, true],
+		['city', 'text', '', true, false, true, true],
 		['recruitment_source', 'select', ['Mail', 'Website', 'Flyer consultatiebureau', 'Flyer daycare', 'Friend', 'Facebook'], true, true, false, true],
 
 		//Appointment information
-		['preferred_appointment_days', 'select', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], true, true, false, true],
-		['appointment_date', 'date', '', true, true, false, false],
-		['appointment_time', 'time', '', true, true, false, false],
-		['age_at_appointment', 'number', '', false, false, false, false],
+		['preferred_appointment_days', 'multiselect', ['None', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], true, true, false, true],
+		['appointment_date', 'date', '', true, false, false, false],
+		['appointment_time', 'time', '', true, false, false, false],
+		['age_at_appointment', 'text', '', false, false, false, false],
 		['appointment_number', 'number', '', true, true, false, true],
 		['appointment_status', 'select', ['New', 'Contacted', 'In progress', 'Completed'], true, true, false, true],
 
@@ -75,9 +75,17 @@ class Baby extends Model
      */
     public function getBabyAgeToday()
     {
-    	$dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);
+    	$dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);      
 
-        return $dobToDate->diffInYears(\Carbon\Carbon::now());
+        $carbonDate = $dobToDate->diff(\Carbon\Carbon::now())->format('%y,%m,%d');
+        
+        $carbonArray = explode(',', $carbonDate);
+        
+        $dateMonthsDays=[0=>(int)$carbonArray[0] * 12 + (int)$carbonArray[1], 1=>(int)$carbonArray[2]];
+
+        $dateMonthsDays = implode(';', $dateMonthsDays);
+
+        return $dateMonthsDays;
     }
 
     /**
@@ -89,11 +97,18 @@ class Baby extends Model
      */
     public function getBabyAgeAtAppointment()
     {
-    	$dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);
+        $dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);
+        $appDateToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->application_date);    
 
-    	$appDateToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->appointment_date);
+        $carbonDate = $dobToDate->diff($appDateToDate)->format('%y,%m,%d');
+
+        $carbonArray = explode(',', $carbonDate);
         
-        return $dobToDate->diffInYears($appDateToDate);
+        $dateMonthsDays=[0=>(int)$carbonArray[0] * 12 + (int)$carbonArray[1], 1=>(int)$carbonArray[2]];
+
+        $dateMonthsDays = implode(';', $dateMonthsDays);
+
+        return $dateMonthsDays;
     }
 
     /**

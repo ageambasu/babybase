@@ -50,6 +50,8 @@ class BabiesController extends Controller
      */
     public function store(Request $request)
     {
+        $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
+        
         Baby::create($this->validateBaby());
 
         return redirect(route('babies.index'));
@@ -80,6 +82,8 @@ class BabiesController extends Controller
             array_push($babyStudiesIds, $study->id);
         }
 
+        $baby->preferred_appointment_days = explode(',', $baby->preferred_appointment_days);
+
         return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studies' => Study::all(), 'babyStudiesIds' => $babyStudiesIds]);
     }
 
@@ -95,6 +99,8 @@ class BabiesController extends Controller
         $validatedAttributes = $this->validateBaby();
 
         unset( $validatedAttributes['studies'] ); //Not saving 'studies' on babies table
+
+        $validatedAttributes['preferred_appointment_days'] = implode(',', $validatedAttributes['preferred_appointment_days']);
 
         $baby->update($validatedAttributes);
 
@@ -182,16 +188,16 @@ class BabiesController extends Controller
             'parent_lastname' => 'required|string|min:2|max:255',
             'phone' =>  'required|numeric|digits_between:3,16',
             'email' => 'required|email',
-            'street' => 'required|string|min:2|max:255',
-            'house_number' =>  'required|numeric',
-            'postcode' =>  'required|string|min:2|max:255',
-            'city' =>  'required|string|min:2|max:255',
+            'street' => 'nullable|string|min:2|max:255',
+            'house_number' =>  'nullable|numeric',
+            'postcode' =>  'nullable|string|min:2|max:255',
+            'city' =>  'nullable|string|min:2|max:255',
             'recruitment_source' =>  'required',
 
             //Appointment information
             'preferred_appointment_days' =>  'required',
-            'appointment_date' => 'required|date|date_format:Y-m-d',
-            'appointment_time' => 'required',
+            'appointment_date' => 'nullable|date|date_format:Y-m-d',
+            'appointment_time' => 'nullable',
             'appointment_number' => 'required|numeric',
             'appointment_status' => 'required',
 
