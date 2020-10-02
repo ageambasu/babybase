@@ -21,7 +21,26 @@ class BabiesController extends Controller
         $sortColumn = $request->get('sortColumn', null);
         $sortOrder = $request->get('sortOrder', null);
 
-        if (isset($sortColumn) && $sortColumn != NULL && isset($sortOrder) && $sortOrder != NULL) {
+        $babyColumns = array_filter($request->only( 
+                    Baby::query()->getModel()->getFilterColumns()
+                ));
+        $studyColumns = array_filter($request->only(
+                    Study::query()->getModel()->getFilterColumns()
+                ));
+        
+        $babies = Baby::filterBabies($babyColumns)->filterStudies($studyColumns)->paginate(10);
+        $fieldsOnDatabase = Baby::$fieldsOnDatabase;
+
+        // dd(
+        //     Baby::filterBabies($babyColumns)->filterStudies($studyColumns)->toSql(),
+        //     Baby::filterBabies($babyColumns)->filterStudies($studyColumns)->getBindings()
+        // );
+
+
+        return view('babies.index', compact('babies','fieldsOnDatabase'));
+
+
+        /*if (isset($sortColumn) && $sortColumn != NULL && isset($sortOrder) && $sortOrder != NULL) {
 
             return view ('babies.index', ['babies' => Baby::filter($filters)->orderBy($sortColumn, $sortOrder)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
 
@@ -29,7 +48,7 @@ class BabiesController extends Controller
             
             return view ('babies.index', ['babies' => Baby::filter($filters)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
         
-        }
+        }*/
     }
 
     /**
@@ -132,19 +151,21 @@ class BabiesController extends Controller
     {
         $allValueTypes = $this->getAllValueTypes();
 
-        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studyFieldsOnDatabase' => Study::$fieldsOnDatabase]);
     }
 
     /**
-     * Returns all babies value types.
+     * Returns all babies and studies value types.
      *
      * @return $allValueTypes
      */
     protected function getAllValueTypes()
     {
+        $allValueTypes = [];
+        
+        //Including babies
         $babies = Baby::all();
         $fieldsOnDatabase = Baby::$fieldsOnDatabase;
-        $allValueTypes = [];
 
         foreach ($fieldsOnDatabase as $key => $fieldOnDatabase) {
 
@@ -166,6 +187,24 @@ class BabiesController extends Controller
             $allValueTypes[$fieldName] = $babyValueTypes;
         }
 
+        //Including studies
+        $studies = Study::all();
+        $fieldsOnDatabase = Study::$fieldsOnDatabase;
+
+        foreach ($fieldsOnDatabase as $key => $fieldOnDatabase) {
+
+            $fieldName = $fieldsOnDatabase[$key][0];
+
+            foreach ($studies as $study) {
+                array_push($babyValueTypes, $study->$fieldName);
+            }
+
+            $babyValueTypes = array_unique(array_map('strtolower', $babyValueTypes));
+            sort($babyValueTypes);
+            
+            $allValueTypes[$fieldName] = $babyValueTypes;
+        }
+
         return $allValueTypes;
     }
 
@@ -176,33 +215,7 @@ class BabiesController extends Controller
      */
     protected function validateBaby()
     {
-        return request()->validate([
-            //Personal information
-            'name' => 'required|string|min:2|max:255',
-            'application_date' => 'required|date|date_format:Y-m-d',
-            'dob' => 'required|date',
-            'sex' => 'required',
-            'monolingual' => 'required',
-            'other_languages' => 'nullable|string|min:2|max:255',
-            'parent_firstname' => 'required|string|min:2|max:255',
-            'parent_lastname' => 'required|string|min:2|max:255',
-            'phone' =>  'required|numeric|digits_between:3,16',
-            'email' => 'required|email',
-            'street' => 'nullable|string|min:2|max:255',
-            'house_number' =>  'nullable|numeric',
-            'postcode' =>  'nullable|string|min:2|max:255',
-            'city' =>  'nullable|string|min:2|max:255',
-            'recruitment_source' =>  'required',
-
-            //Appointment information
-            'preferred_appointment_days' =>  'required',
-            'appointment_date' => 'nullable|date|date_format:Y-m-d',
-            'appointment_time' => 'nullable',
-            'appointment_number' => 'required|numeric',
-            'appointment_status' => 'required',
-
-            'notes' => 'nullable|string|min:2|max:255',
-
+        return request()->validate(Baby::$validationRules + [
             'studies' => 'exists:studies,id',
         ]);
     }

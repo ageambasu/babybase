@@ -49,6 +49,34 @@ class Baby extends Model
         ['notes', 'text', '', true, false, false, false],
     ];
 
+    public static $validationRules = [
+            //Personal information
+            'name' => 'required|string|min:2|max:255',
+            'application_date' => 'required|date|date_format:Y-m-d',
+            'dob' => 'required|date',
+            'sex' => 'required',
+            'monolingual' => 'required',
+            'other_languages' => 'nullable|string|min:2|max:255',
+            'parent_firstname' => 'required|string|min:2|max:255',
+            'parent_lastname' => 'required|string|min:2|max:255',
+            'phone' =>  'required|numeric|digits_between:3,16',
+            'email' => 'required|email',
+            'street' => 'nullable|string|min:2|max:255',
+            'house_number' =>  'nullable|numeric',
+            'postcode' =>  'nullable|string|min:2|max:255',
+            'city' =>  'nullable|string|min:2|max:255',
+            'recruitment_source' =>  'required',
+
+            //Appointment information
+            'preferred_appointment_days' =>  'required',
+            'appointment_date' => 'nullable|date|date_format:Y-m-d',
+            'appointment_time' => 'nullable',
+            'appointment_number' => 'required|numeric',
+            'appointment_status' => 'required',
+
+            'notes' => 'nullable|string|min:2|max:255',
+        ];
+
 	/**
      * The attributes that are not mass assignable.
      *
@@ -118,10 +146,10 @@ class Baby extends Model
      * @param  \App\Filters  $filters
      * @return selected filters
      */
-    public function scopeFilter($query, QueryFilter $filters)
+    /*public function scopeFilter($query, QueryFilter $filters)
     {
         return $filters->apply($query);
-    }
+    }*/
 
     /**
      * Returns all the studies linked to the baby.
@@ -132,5 +160,37 @@ class Baby extends Model
     public function studies()
     {
         return $this->belongsToMany(Study::class)->withTimestamps();
+    }
+
+
+    public function scopeFilterBabies($query, array $filters = []) 
+    {
+        if ($filters) {
+            foreach ($filters as $column => $value) {
+                if (in_array($column, $this->getFilterColumns())) {
+                    $query->where($column, '=', $value); 
+                }
+            }
+
+        }
+    }
+
+    public function getFilterColumns() : array 
+    {
+        return array_keys(self::$validationRules);
+    }
+
+    public function scopeFilterStudies($query, array $filters = []) 
+    {
+        if ($filters) {
+            return $this->whereHas('studies' , function ($query) use ($filters) {
+                // aquí el $query es sobre studies
+                foreach ($filters as $column => $value) {
+                    if (in_array($column, $query->getModel()->getFilterColumns())) { 
+                        $query->where($column, '=', $value); 
+                    }
+                }
+            });
+        }
     }
 }

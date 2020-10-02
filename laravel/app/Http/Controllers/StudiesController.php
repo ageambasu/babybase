@@ -121,12 +121,6 @@ class StudiesController extends Controller
      */
     protected function validateStudy()
     {
-        return request()->validate([
-            'study_type' => 'required|string|min:2|max:255',
-            'study_name' => 'required|string|min:2|max:255',
-            'study_age_range_start' => 'required|numeric',
-            'study_age_range_end' => 'required|numeric',
-            'notes' => 'nullable|string|min:2|max:255',
-        ]);
+        return request()->validate(Study::$validationRules);
     }
 }

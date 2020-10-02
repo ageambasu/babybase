@@ -16,3 +16,6 @@
 -Create languages table?
 -Create appointments table?
 -Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
+
+FILTERS:
+-Fix age_today into numeric value at public function age_today($value = null)
