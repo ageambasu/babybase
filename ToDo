@@ -8,7 +8,6 @@
  */
 -Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
 -Fix age_today into numeric value for filtering at public function age_today($value = null)
--Fix dropdown fields value not recovered on Edit
 -Fix study filter works as OR, should work as AND
 
 /**

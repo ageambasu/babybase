@@ -12,7 +12,7 @@ $factory->define(Baby::class, function (Faker $faker) {
         'application_date' => date($format = 'Y-m-d'),
         'dob' => date($format = 'Y-m-d'),
         'sex' => ['female', 'male', 'other'][rand(0,2)],
-        'monolingual' => ['yes', 'no'][rand(0,1)],
+        'monolingual_dutch' => ['yes', 'no'][rand(0,1)],
         'other_languages' => $faker->languageCode,
         'parent_firstname' => $faker->firstNameMale,
         'parent_lastname' => $faker->lastName,

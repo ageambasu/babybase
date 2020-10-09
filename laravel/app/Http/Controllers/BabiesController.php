@@ -58,6 +58,7 @@ class BabiesController extends Controller
     public function store(Request $request)
     {
         $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
+        $request['other_languages'] = implode(',', $request['other_languages']);
         
         Baby::create($this->validateBaby());
 
@@ -90,6 +91,7 @@ class BabiesController extends Controller
         }
 
         $baby->preferred_appointment_days = explode(',', $baby->preferred_appointment_days);
+        $baby->other_languages = explode(',', $baby->other_languages);
 
         return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studies' => Study::all(), 'babyStudiesIds' => $babyStudiesIds]);
     }
@@ -108,6 +110,7 @@ class BabiesController extends Controller
         unset( $validatedAttributes['studies'] ); //Not saving 'studies' on babies table
 
         $validatedAttributes['preferred_appointment_days'] = implode(',', $validatedAttributes['preferred_appointment_days']);
+        $validatedAttributes['other_languages'] = implode(',', $validatedAttributes['other_languages']);
 
         $baby->update($validatedAttributes);
 

@@ -99,10 +99,10 @@ class BabyFilters extends QueryFilter
      * @param  $value
      * @return filtered data
      */
-    public function monolingual($value = null)
+    public function monolingual_dutch($value = null)
     {
         if ($value) {
-            return $this->builder->where('monolingual', $value);
+            return $this->builder->where('monolingual_dutch', $value);
         }
     }
 
