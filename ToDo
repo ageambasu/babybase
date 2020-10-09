@@ -6,10 +6,10 @@
 /**
  * Scope 2: Mid term
  */
--Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
 -Fix age_today into numeric value for filtering at public function age_today($value = null)
 -Fix study filter works as OR, should work as AND
 -Fix filtering as LIKE instead of =, and show full list of values for multiselect
+-Participant form confirm showed fields, and submit with confirmation message or redirect to specified url (when user not logged in)
 
 /**
  * Scope 3: Long term
