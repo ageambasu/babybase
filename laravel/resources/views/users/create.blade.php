@@ -19,46 +19,51 @@
 				
 				@if ($fieldOnForm)
 
-					<div class="row">
-						<div class="col-3"></div>
-						<div class="col-6">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">{{ $fieldNameOnForm }}</span>
+					@if($fieldName == 'isAdmin')
+						<?php //No admin option during creation ?>
+					@else
+						<div class="row">
+							<div class="col-3"></div>
+							<div class="col-6">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">{{ $fieldNameOnForm }}</span>
+									</div>
+
+									@switch($fieldType)
+
+										@case('select')
+											<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+												<option value=''>Choose...</option>
+
+												@foreach($fieldValues as $key => $fieldValue)
+
+													<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
+
+												@endforeach
+
+											</select>
+										@break
+
+										@case('checkbox')
+											<input type="hidden" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" value="0">
+											<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
+
+										@break
+
+										@default
+											<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
+									
+									@endswitch
+
+									@error($fieldName)
+										<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
+									@enderror
 								</div>
-
-								@switch($fieldType)
-
-									@case('select')
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
-											<option value=''>Choose...</option>
-
-											@foreach($fieldValues as $key => $fieldValue)
-
-												<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
-
-											@endforeach
-
-										</select>
-									@break
-
-									@case('checkbox')
-										<input type="hidden" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" value="0">
-										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
-									@break
-
-									@default
-										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
-								
-								@endswitch
-
-								@error($fieldName)
-									<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
-								@enderror
 							</div>
+							<div class="col-3"></div>
 						</div>
-						<div class="col-3"></div>
-					</div>
+					@endif
 
 				@endif
 				
