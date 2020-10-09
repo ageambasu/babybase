@@ -49,6 +49,11 @@ class Baby extends Model
         ['notes', 'text', '', true, false, false, false],
     ];
 
+    /**
+     * The rules to validate.
+     *
+     * @var array
+     */
     public static $validationRules = [
             //Personal information
             'name' => 'required|string|min:2|max:255',
@@ -140,18 +145,6 @@ class Baby extends Model
     }
 
     /**
-     * Returns the url path for the instance.
-     *
-     * @param  $query
-     * @param  \App\Filters  $filters
-     * @return selected filters
-     */
-    /*public function scopeFilter($query, QueryFilter $filters)
-    {
-        return $filters->apply($query);
-    }*/
-
-    /**
      * Returns all the studies linked to the baby.
      *
      * @param  \App\Baby  $baby
@@ -163,6 +156,13 @@ class Baby extends Model
     }
 
 
+    /**
+     * Returns the url path for the instance.
+     *
+     * @param  $query
+     * @param  \App\Filters  $filters
+     * @return selected filters
+     */
     public function scopeFilterBabies($query, array $filters = []) 
     {
         if ($filters) {
@@ -175,16 +175,17 @@ class Baby extends Model
         }
     }
 
-    public function getFilterColumns() : array 
-    {
-        return array_keys(self::$validationRules);
-    }
-
+    /**
+     * Returns the url path for the instance.
+     *
+     * @param  $query
+     * @param  \App\Filters  $filters
+     * @return selected filters
+     */
     public function scopeFilterStudies($query, array $filters = []) 
     {
         if ($filters) {
             return $this->whereHas('studies' , function ($query) use ($filters) {
-                // aquí el $query es sobre studies
                 foreach ($filters as $column => $value) {
                     if (in_array($column, $query->getModel()->getFilterColumns())) { 
                         $query->where($column, '=', $value); 
@@ -192,5 +193,16 @@ class Baby extends Model
                 }
             });
         }
+    }
+
+    /**
+     * Returns all keys of Baby.
+     *
+     * @param  \App\Baby  self
+     * @return all keys
+     */
+    public function getFilterColumns() : array 
+    {
+        return array_keys(self::$validationRules);
     }
 }

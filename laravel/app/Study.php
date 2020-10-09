@@ -26,6 +26,11 @@ class Study extends Model
 		['notes', 'text', '', true, false, false, false],
     ];
 
+    /**
+     * The rules to validate.
+     *
+     * @var array
+     */
     public static $validationRules = [
             'study_type' => 'required|string|min:2|max:255',
             'study_name' => 'required|string|min:2|max:255',
@@ -63,13 +68,15 @@ class Study extends Model
         return $this->belongsToMany(Baby::class)->withTimestamps();
     }
 
-
+    /**
+     * Returns all keys of Study.
+     *
+     * @param  \App\Study  self
+     * @return all keys
+     */
     public function getFilterColumns() : array 
     {
         return array_keys(self::$validationRules);
-        // return array_map(function ($attribute) {
-        //     return $this->qualifyColumn($attribute);
-        // }, array_keys(self::$validationRules));
     }
 
 }

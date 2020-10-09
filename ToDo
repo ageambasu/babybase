@@ -6,16 +6,15 @@
 /**
  * Scope 2: Mid term
  */
--Modify Filter to include pivot tables?
--Pivot baby_note_study + drop studies.note?
--Filter dob (by #months)?
+-Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
+-Fix age_today into numeric value for filtering at public function age_today($value = null)
+-Fix dropdown fields value not recovered on Edit
+-Fix study filter works as OR, should work as AND
 
 /**
  * Scope 3: Long term
  */
 -Create languages table?
 -Create appointments table?
--Accessible for all: Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
-
-FILTERS:
--Fix age_today into numeric value at public function age_today($value = null)
+-Pivot baby_note_study + drop studies.note?
+-Modify Filter to include pivot tables?
