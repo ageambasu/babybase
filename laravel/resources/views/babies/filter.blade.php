@@ -27,24 +27,41 @@
 									<span class="input-group-text">{{ $fieldNameOnForm }}</span>
 								</div>
 
-								<select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}">
-									<option value=''>Filter by...</option>
+								@switch($fieldType)
 
-											@foreach($allValueTypes as $key => $values)
+									@case('multiselect')
+										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}[]" multiple="multiple">
 
-												@if($key == $fieldName)
+											@foreach($fieldValues as $key => $fieldValue)
 
-													@foreach($values as $value)
-
-														<option value="{{ $value }}">{{ $value }}</option>
-
-													@endforeach
-
-												@endif
+												<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
 
 											@endforeach
 
-								</select>
+										</select>
+									@break
+
+									@default
+										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}">
+											<option value=''>Filter by...</option>
+
+													@foreach($allValueTypes as $key => $values)
+
+														@if($key == $fieldName)
+
+															@foreach($values as $value)
+
+																<option value="{{ $value }}">{{ $value }}</option>
+
+															@endforeach
+
+														@endif
+
+													@endforeach
+
+										</select>
+								
+								@endswitch
 
 								@error($fieldName)
 									<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>

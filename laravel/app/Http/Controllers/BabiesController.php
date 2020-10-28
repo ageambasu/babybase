@@ -57,8 +57,12 @@ class BabiesController extends Controller
      */
     public function store(Request $request)
     {
-        $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
-        $request['other_languages'] = implode(',', $request['other_languages']);
+        if (isset($request['preferred_appointment_days'])){
+            $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
+        }
+        if (isset($request['other_languages'])){
+            $request['other_languages'] = implode(',', $request['other_languages']);
+        }
         
         Baby::create($this->validateBaby());
 

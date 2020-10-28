@@ -171,7 +171,6 @@ class Baby extends Model
                     $query->where($column, '=', $value); 
                 }
             }
-
         }
     }
 
