@@ -1,12 +1,12 @@
 @extends ('layout')
 
 @section ('content')
-	<form class="text-center" method="POST" action="{{ route('babies.show', $baby) }}">
+	<form name="edit-baby" class="text-center" method="POST" action="{{ route('babies.show', $baby) }}">
 		@csrf
 		@method('PUT')
-		
+
 		<div class="container">
-			
+
 			@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
 				@php ($fieldName = $fieldsOnDatabase[$i][0])
@@ -17,7 +17,7 @@
 				@php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
 				@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
 				@php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
-				
+
 				@if ($fieldOnForm)
 
 					<div class="row">
@@ -39,7 +39,6 @@
 												<option value="{{ $fieldValue }}" {{ (($baby->$fieldName) == $fieldValue ? "selected":"") }}>{{ $fieldValue }}</option>
 
 											@endforeach
-
 										</select>
 									@break
 
@@ -62,12 +61,27 @@
 
 											@endforeach
 
+                                                                                        @if ($fieldName == 'other_languages')
+                                                                                          <?php
+                                                                                          $selected_languages = array();
+                                                                                          foreach($baby->languages as $lang) {
+                                                                                          ?>
+                                                                                            <option value="{{$lang->name}}" selected="selected">{{ $lang->name }}</option>
+                                                                                          <?php
+                                                                                            array_push($selected_languages, $lang->id);
+                                                                                          }
+                                                                                          foreach($all_languages as $lang) {
+                                                                                            if (!in_array($lang->id, $selected_languages)) { ?>
+                                                                                            <option value="{{$lang->name}}">{{ $lang->name }}</option>
+                                                                                            <?php }
+                                                                                            }?>
+                                                                                        @endif
 										</select>
 									@break
 
 									@default
 										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName }}">
-								
+
 								@endswitch
 
 								@error($fieldName)
@@ -79,7 +93,7 @@
 					</div>
 
 				@endif
-				
+
 			@endfor
 
 			<div class="row">
@@ -93,7 +107,7 @@
 						<select multiple class="custom-select form-control @error('studies') is-invalid @enderror" name="studies[]">
 
 							@foreach($studies as $study)
-									
+
 									@if( in_array( $study->id, $babyStudiesIds ) )
 										<option value="{{ $study->id }}" selected>{{ $study->study_name }}</option>
 									@else
@@ -122,4 +136,9 @@
 			</div>
 		</div>
 	</form>
+        <script type="text/javascript">
+         $(function() {
+             $(document.forms['edit-baby']['other_languages[]']).select2({tags:true});
+         });
+        </script>
 @endsection

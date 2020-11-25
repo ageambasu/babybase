@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Baby;
+use App\Language;
 use App\Study;
 use App\Filters\BabyFilters;
 use Illuminate\Http\Request;
@@ -18,25 +19,27 @@ class BabiesController extends Controller
      */
     public function index(BabyFilters $filters, Request $request)
     {
-        $sortColumn = $request->get('sortColumn', null);
-        $sortOrder = $request->get('sortOrder', null);
+        $sortColumn = $request->get('sortColumn', 'id');
+        $sortOrder = $request->get('sortOrder', 'asc');
 
-        $babyColumns = array_filter($request->only( 
-                    Baby::query()->getModel()->getFilterColumns()
-                ));
+        $babyFilterColumns = Baby::query()->getModel()->getFilterColumns();
+        $babyColumns = array_filter($request->only($babyFilterColumns));
         $studyColumns = array_filter($request->only(
                     Study::query()->getModel()->getFilterColumns()
                 ));
 
-        if (isset($sortColumn) && $sortColumn != NULL && isset($sortOrder) && $sortOrder != NULL) {
+        $languages = $request->get('languages', []);
+        $babies = Baby::filterBabies($babyColumns)
+                ->filterStudies($studyColumns)
+                ->filterLanguages($languages);
 
-            return view ('babies.index', ['babies' => Baby::filterBabies($babyColumns)->filterStudies($studyColumns)->orderBy($sortColumn, $sortOrder)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        $activeFilters = array_merge($babyColumns, $studyColumns);
+        if($languages) $activeFilters = array_merge($activeFilters, array('languages' => $languages));
 
-        } else {
-            
-            return view ('babies.index', ['babies' => Baby::filterBabies($babyColumns)->filterStudies($studyColumns)->paginate(10), 'fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
-        
-        }
+        return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
+                                      'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                      'activeFilters' => $activeFilters]);
+
     }
 
     /**
@@ -63,7 +66,7 @@ class BabiesController extends Controller
         if (isset($request['other_languages'])){
             $request['other_languages'] = implode(',', $request['other_languages']);
         }
-        
+
         Baby::create($this->validateBaby());
 
         return redirect(route('babies.index'));
@@ -89,7 +92,7 @@ class BabiesController extends Controller
     public function edit(Baby $baby)
     {
         $babyStudiesIds = [];
-        
+
         foreach ($baby->studies as $study) {
             array_push($babyStudiesIds, $study->id);
         }
@@ -97,7 +100,11 @@ class BabiesController extends Controller
         $baby->preferred_appointment_days = explode(',', $baby->preferred_appointment_days);
         $baby->other_languages = explode(',', $baby->other_languages);
 
-        return view('babies.edit', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studies' => Study::all(), 'babyStudiesIds' => $babyStudiesIds]);
+        return view('babies.edit', ['baby' => $baby,
+                                    'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                    'studies' => Study::all(),
+                                    'babyStudiesIds' => $babyStudiesIds,
+                                    'all_languages' => Language::all()]);
     }
 
     /**
@@ -114,11 +121,20 @@ class BabiesController extends Controller
         unset( $validatedAttributes['studies'] ); //Not saving 'studies' on babies table
 
         $validatedAttributes['preferred_appointment_days'] = implode(',', $validatedAttributes['preferred_appointment_days']);
-        $validatedAttributes['other_languages'] = implode(',', $validatedAttributes['other_languages']);
 
+        unset($validatedAttributes['other_languages']);
         $baby->update($validatedAttributes);
 
         $baby->studies()->sync(request('studies'));
+
+        $languages = request('other_languages');
+        $lang_ids = array();
+        foreach($languages as $lang_name) {
+            $lang = Language::firstOrCreate(['name' => $lang_name]);
+            array_push($lang_ids, $lang->id);
+        }
+
+        $baby->languages()->sync($lang_ids);
 
         //return redirect(route('babies.show', $baby));
         return redirect(route('babies.index'));
@@ -146,7 +162,10 @@ class BabiesController extends Controller
     {
         $allValueTypes = $this->getAllValueTypes();
 
-        return view('babies.filter', ['allValueTypes' => $allValueTypes, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studyFieldsOnDatabase' => Study::$fieldsOnDatabase]);
+        return view('babies.filter', ['allValueTypes' => $allValueTypes,
+                                      'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                      'studyFieldsOnDatabase' => Study::$fieldsOnDatabase,
+                                      'all_languages' => Language::all()]);
     }
 
     /**
@@ -157,7 +176,7 @@ class BabiesController extends Controller
     protected function getAllValueTypes()
     {
         $allValueTypes = [];
-        
+
         //Including babies
         $babies = Baby::all();
         $fieldsOnDatabase = Baby::$fieldsOnDatabase;
@@ -178,7 +197,7 @@ class BabiesController extends Controller
 
             $babyValueTypes = array_unique(array_map('strtolower', $babyValueTypes));
             sort($babyValueTypes);
-            
+
             $allValueTypes[$fieldName] = $babyValueTypes;
         }
 
@@ -196,7 +215,7 @@ class BabiesController extends Controller
 
             $babyValueTypes = array_unique(array_map('strtolower', $babyValueTypes));
             sort($babyValueTypes);
-            
+
             $allValueTypes[$fieldName] = $babyValueTypes;
         }
 

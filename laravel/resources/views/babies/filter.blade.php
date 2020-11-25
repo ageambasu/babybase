@@ -1,7 +1,7 @@
 @extends ('layout')
 
 @section ('content')
-	<form class="text-center" method="GET" action="{{ route('babies.index') }}">
+	<form name="filter-baby" class="text-center" method="GET" action="{{ route('babies.index') }}">
 		@csrf
 
 		<div class="container">
@@ -16,7 +16,7 @@
 				@php ($fieldRequiredOnForm = $fieldsOnDatabase[$key][4])
 				@php ($fieldOnIndex = $fieldsOnDatabase[$key][5])
 				@php ($fieldOnFilter = $fieldsOnDatabase[$key][6])
-				
+
 				@if ($fieldOnFilter)
 
 					<div class="row">
@@ -30,6 +30,12 @@
 								@switch($fieldType)
 
 									@case('multiselect')
+                                                                                @if ($fieldName == 'other_languages')
+                                                                                  <select class="custom-select form-control" name="languages[]" multiple="multiple">
+                                                                                  @foreach($all_languages as $lang)
+                                                                                    <option value="{{$lang->name}}">{{ $lang->name }}</option>
+                                                                                  @endforeach
+                                                                                @endif
 										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}[]" multiple="multiple">
 
 											@foreach($fieldValues as $key => $fieldValue)
@@ -37,15 +43,15 @@
 												<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
 
 											@endforeach
-
 										</select>
-									@break
 
-									@default
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}">
-											<option value=''>Filter by...</option>
+                                                                        @break
 
-													@foreach($allValueTypes as $key => $values)
+                                                                        @default
+                                                                                <select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}">
+                                                                                        <option value=''>Filter by...</option>
+
+                                                                                                        @foreach($allValueTypes as $key => $values)
 
 														@if($key == $fieldName)
 
@@ -60,7 +66,7 @@
 													@endforeach
 
 										</select>
-								
+
 								@endswitch
 
 								@error($fieldName)
@@ -72,7 +78,7 @@
 					</div>
 
 				@endif
-				
+
 			@endforeach
 
 			@foreach($studyFieldsOnDatabase as $key => $fieldOnDatabase)
@@ -85,7 +91,7 @@
 				@php ($fieldRequiredOnForm = $studyFieldsOnDatabase[$key][4])
 				@php ($fieldOnIndex = $studyFieldsOnDatabase[$key][5])
 				@php ($fieldOnFilter = $studyFieldsOnDatabase[$key][6])
-				
+
 				@if ($fieldOnFilter)
 
 					<div class="row">
@@ -124,7 +130,7 @@
 					</div>
 
 				@endif
-				
+
 			@endforeach
 
 			<div class="row mt-4">
@@ -136,4 +142,9 @@
 			</div>
 		</div>
 	</form>
+        <script type="text/javascript">
+         $(function() {
+             $(document.forms['filter-baby']['languages[]']).select2({tags:true});
+         });
+        </script>
 @endsection

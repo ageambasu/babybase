@@ -34,15 +34,22 @@
 								@endif
 							@break
 
-							@default
-								<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName }}" readonly>
+                                                        @case('other_languages')
+                                                          <select class="custom-select form-control" multiple="multiple" readonly>
+                                                          @foreach ($baby->languages as $lang)
+                                                            <option value="{{$lang->id}}">{{ $lang->name }}</option>
+                                                          @endforeach
+                                                          </select>
+                                                        @break
+                                                        @default
+                                                                <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName }}" readonly>
 						@endswitch
 
 					</div>
 				</div>
 				<div class="col-3"></div>
 			</div>
-			
+
 		@endfor
 
 		<br>
@@ -58,25 +65,25 @@
 		@forelse ($baby->studies as $study)
 			@for ($i = 0; $i < count($studyFieldsOnDatabase); $i++)
 
-				@php ($stuydFieldName = $studyFieldsOnDatabase[$i][0])
-				@php ($stuydFieldNameOnForm = ucfirst(str_replace ("_", " ", $stuydFieldName)))
-				@php ($stuydFieldType = $studyFieldsOnDatabase[$i][1])
-				@php ($stuydFieldValues = $studyFieldsOnDatabase[$i][2])
-				@php ($stuydFieldOnForm = $studyFieldsOnDatabase[$i][3])
-				@php ($stuydFieldRequiredOnForm = $studyFieldsOnDatabase[$i][4])
-				@php ($stuydFieldOnIndex = $studyFieldsOnDatabase[$i][5])
-				@php ($stuydFieldOnFilter = $studyFieldsOnDatabase[$i][6])
+				@php ($studyFieldName = $studyFieldsOnDatabase[$i][0])
+				@php ($studyFieldNameOnForm = ucfirst(str_replace ("_", " ", $studyFieldName)))
+				@php ($studyFieldType = $studyFieldsOnDatabase[$i][1])
+				@php ($studyFieldValues = $studyFieldsOnDatabase[$i][2])
+				@php ($studyFieldOnForm = $studyFieldsOnDatabase[$i][3])
+				@php ($studyFieldRequiredOnForm = $studyFieldsOnDatabase[$i][4])
+				@php ($studyFieldOnIndex = $studyFieldsOnDatabase[$i][5])
+				@php ($studyFieldOnFilter = $studyFieldsOnDatabase[$i][6])
 
-				@if($stuydFieldName == 'study_name')
+				@if($studyFieldName == 'study_name')
 					<div class="row">
 						<div class="col-3"></div>
 						<div class="col-6">
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text">{{ $stuydFieldNameOnForm }}</span>
+									<span class="input-group-text">{{ $studyFieldNameOnForm }}</span>
 								</div>
 
-								<input type="{{ $stuydFieldType }}" class="form-control" name="{{ $stuydFieldName }}" value="{{ $study->$stuydFieldName }}" readonly>
+								<input type="{{ $studyFieldType }}" class="form-control" name="{{ $studyFieldName }}" value="{{ $study->$studyFieldName }}" readonly>
 
 								<a href="{{ route('studies.show', $study) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 
@@ -85,7 +92,7 @@
 						<div class="col-3"></div>
 					</div>
 				@endif
-				
+
 			@endfor
 
 		@empty
@@ -95,7 +102,7 @@
 				<div class="col-3"></div>
 			</div>
 		@endforelse
-			
+
 
 		<div class="row mt-4">
 			<div class="col-3"></div>

@@ -1,8 +1,18 @@
 @extends ('layout')
 
 @section ('content')
-	<div class="container">	
-		<div class="row">
+	<div class="container">
+          @if ($activeFilters)
+          <div class="row">
+            <div class="col">Showing only:
+              @foreach($activeFilters as $k => $v)
+                <span class="badge badge-pill badge-secondary">{{ ucfirst(str_replace("_", " ", $k)) }}: {{ $v }}</span>
+              @endforeach
+            </div>
+          </div>
+          <hr/>
+          @endif
+                <div class="row">
 			<div class="col">
 				<div class="table-responsive">
 					<table class="table table-hover">
@@ -15,7 +25,7 @@
 									@php ($fieldName = $fieldsOnDatabase[$i][0])
 									@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
 									@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-									
+
 									@if ($fieldOnIndex)
 
 										@if ($fieldName == 'age_today')
@@ -47,20 +57,20 @@
 								<th scope="col">Actions</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							@foreach ($babies as $baby)
 								<tr>
 									<th scope="row">{{ $baby->id }}</th>
-									
+
 									@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
 										@php ($fieldName = $fieldsOnDatabase[$i][0])
 										@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
 										@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-										
+
 										@if ($fieldOnIndex)
-											
+
 											@switch($fieldName)
 												@case('age_today')
 													<td>{{ $baby->getBabyAgeToday() }}</td>
@@ -76,7 +86,7 @@
 
 									<td>
 										<form action="{{ route('babies.destroy', $baby->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete the selected record?');">
-											
+
 											<a href="{{ route('babies.show', $baby) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 											<a href="{{ route('babies.edit', $baby) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
 
