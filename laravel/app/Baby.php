@@ -24,8 +24,10 @@ class Baby extends Model
 		//Personal information
 		['name', 'text', '', true, true, true, false],
 		['application_date', 'date', '', true, true, false, true],
-		['dob', 'date', '', true, true, false, true],
-		['age_today', 'text', '', false, false, true, true],
+		['dob', 'date', '', true, true, false, false],
+		['older_than', 'text', [], false, false, false, true],
+		['younger_than', 'text', [], false, false, false, true],
+		['age_today', 'text', [], false, false, true, false],
 		['sex', 'select', ['Female', 'Male'], true, true, true, true],
 		['monolingual_dutch', 'select', ['Yes', 'No'], true, true, true, true],
 		['other_languages', 'multiselect', [], true, false, false, true],

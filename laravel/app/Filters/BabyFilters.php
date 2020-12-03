@@ -5,6 +5,11 @@ namespace App\Filters;
 use Request;
 use Carbon\Carbon;
 
+/**
+ * This helper class is used in BabiesController via dependency injection
+ * to translater some filters to database queries.
+ * TODO: remove methods that are not in use
+ */
 class BabyFilters extends QueryFilter
 {
     /**
@@ -17,6 +22,26 @@ class BabyFilters extends QueryFilter
     {
         if ($value) {
             return $this->builder->where('application_date', $value);
+        }
+    }
+
+    public function older_than($value = null)
+    {
+        if (isset($value)) {
+            $dateToday = Carbon::now('Europe/Amsterdam');
+            $calcMinDob = $dateToday->subMonths($value);
+            $min_dob = $calcMinDob->format('Y-m-d'); //no older than
+            return $this->builder->where('dob', '<=', $min_dob);
+        }
+    }
+
+    public function younger_than($value = null)
+    {
+        if (isset($value)) {
+            $dateToday = Carbon::now('Europe/Amsterdam');
+            $calcMinDob = $dateToday->subMonths($value);
+            $max_dob = $calcMinDob->format('Y-m-d');
+            return $this->builder->where('dob', '>', $max_dob);
         }
     }
 
@@ -33,7 +58,7 @@ class BabyFilters extends QueryFilter
         if (isset($value)) {
 
             $dateToday = Carbon::now('Europe/Amsterdam');
-            
+
             $calcMinDob = $dateToday->subYears($value);
             $min_dob = $calcMinDob->format('Y-m-d'); //no older than
 
@@ -45,7 +70,7 @@ class BabyFilters extends QueryFilter
                 $max_dob = $calcMaxDob->format('Y-m-d'); //no younger than
 
                 return $this->builder->where('dob', '<=', $min_dob)->where('dob', '>', $max_dob);
-            
+
             } elseif ($value == 1) {
 
                 $maxYearValue = $value;
@@ -54,16 +79,16 @@ class BabyFilters extends QueryFilter
                 $max_dob = $calcMaxDob->format('Y-m-d'); //no younger than
 
                 return $this->builder->where('dob', '<=', $min_dob)->where('dob', '>', $max_dob);
-            
+
             } else {
 
                 $calcMinDob = $dateToday->subDays(364);
                 $min_dob = $calcMinDob->format('Y-m-d'); //no older than
-                
+
                 return $this->builder->where('dob', '>', $min_dob);
 
             }
-            
+
         }
     }
 

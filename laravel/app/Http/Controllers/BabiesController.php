@@ -29,11 +29,17 @@ class BabiesController extends Controller
                 ));
 
         $languages = $request->get('languages', []);
+        $ageMin = $request->get('older_than');
+        $ageMax = $request->get('younger_than');
+
         $babies = Baby::filterBabies($babyColumns)
                 ->filterStudies($studyColumns)
                 ->filterLanguages($languages);
 
+        $filters->apply($babies);
+
         $activeFilters = array_merge($babyColumns, $studyColumns);
+        $activeFilters = array_merge($activeFilters, $filters->activeFilters());
         if($languages) $activeFilters = array_merge($activeFilters, array('languages' => $languages));
 
         return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
@@ -189,7 +195,6 @@ class BabiesController extends Controller
             foreach ($babies as $baby) {
 
                 if ($fieldName == 'age_today') {
-                    array_push($babyValueTypes, $baby->getBabyAgeToday());
                 } else {
                     array_push($babyValueTypes, $baby->$fieldName);
                 }

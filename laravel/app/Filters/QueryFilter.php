@@ -11,6 +11,8 @@ abstract class QueryFilter
 
     protected $builder;
 
+    protected $activeFilters;
+
     /**
      * QueryFilters constructor.
      *
@@ -19,6 +21,7 @@ abstract class QueryFilter
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->activeFilters = array();
     }
 
     /**
@@ -35,19 +38,27 @@ abstract class QueryFilter
      * Applies selected filters.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @return built filters 
+     * @return built filters
      */
     public function apply(Builder $builder)
     {
         $this->builder = $builder;
 
         foreach ($this->filters() as $name => $value) {
-            if (method_exists($this, $name)) { 
+            if (method_exists($this, $name)) {
                 call_user_func_array([$this, $name], array_filter([$value]));
+                if ($value) {
+                    $this->activeFilters[$name] = $value;
+                }
             }
         }
 
         return $this->builder;
 
+    }
+
+    public function activeFilters()
+    {
+        return $this->activeFilters;
     }
 }

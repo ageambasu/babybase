@@ -6,7 +6,13 @@
           <div class="row">
             <div class="col">Showing only:
               @foreach($activeFilters as $k => $v)
-                <span class="badge badge-pill badge-secondary">{{ ucfirst(str_replace("_", " ", $k)) }}: {{ $v }}</span>
+                @if (is_array($v))
+                  @foreach ($v as $entry)
+                    <span class="badge badge-pill badge-secondary">{{ ucfirst(str_replace("_", " ", $k)) }}: {{ $entry }}</span>
+                  @endforeach
+                @else
+                  <span class="badge badge-pill badge-secondary">{{ ucfirst(str_replace("_", " ", $k)) }}: {{ $v }}</span>
+                @endif
               @endforeach
             </div>
           </div>

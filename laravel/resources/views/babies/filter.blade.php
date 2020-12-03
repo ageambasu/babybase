@@ -28,6 +28,9 @@
 								</div>
 
 								@switch($fieldType)
+                                                                  @case('text')
+                                                                    <input class="form-control" name="{{ $fieldName }}" />
+                                                                  @break
 
 									@case('multiselect')
                                                                                 @if ($fieldName == 'other_languages')
@@ -72,6 +75,12 @@
 								@error($fieldName)
 									<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
 								@enderror
+                                                                        @if($fieldName == 'older_than' || $fieldName == 'younger_than')
+                                                                          <div class="input-group-append">
+                                                                            <span class="input-group-text">months</span>
+                                                                          </div>
+                                                                        @endif
+
 							</div>
 						</div>
 						<div class="col-3"></div>
