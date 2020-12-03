@@ -55,7 +55,8 @@ class BabiesController extends Controller
      */
     public function create()
     {
-        return view('babies.create', ['fieldsOnDatabase' => Baby::$fieldsOnDatabase]);
+        return view('babies.create', ['fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                      'all_languages' => Language::all()]);
     }
 
     /**
@@ -69,11 +70,17 @@ class BabiesController extends Controller
         if (isset($request['preferred_appointment_days'])){
             $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
         }
-        if (isset($request['other_languages'])){
-            $request['other_languages'] = implode(',', $request['other_languages']);
+
+        $baby = Baby::create($this->validateBaby());
+
+        $languages = request('other_languages');
+        $lang_ids = array();
+        foreach($languages as $lang_name) {
+            $lang = Language::firstOrCreate(['name' => $lang_name]);
+            array_push($lang_ids, $lang->id);
         }
 
-        Baby::create($this->validateBaby());
+        $baby->languages()->sync($lang_ids);
 
         return redirect(route('babies.index'));
     }
