@@ -1,11 +1,11 @@
 @extends ('layout')
 
 @section ('content')
-	<div class="container">	
+	<div class="container">
 		<div class="row">
 			<div class="col">
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-hover table-striped">
 						<thead class="thead-light">
 							<tr>
 								<th scope="col">#</th>
@@ -15,7 +15,7 @@
 									@php ($fieldName = $fieldsOnDatabase[$i][0])
 									@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
 									@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-									
+
 									@if ($fieldOnIndex)
 
 										<th scope="col">
@@ -45,18 +45,18 @@
 								<th scope="col">Actions</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							@foreach ($studies as $study)
 								<tr>
 									<th scope="row">{{ $study->id }}</th>
-									
+
 									@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
 										@php ($fieldName = $fieldsOnDatabase[$i][0])
 										@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
 										@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-										
+
 										@if ($fieldOnIndex)
 
 											<td>{{ $study->$fieldName }}</td>
@@ -67,7 +67,7 @@
 
 									<td>
 										<form action="{{ route('studies.destroy', $study->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete the selected record?');">
-											
+
 											<a href="{{ route('studies.show', $study) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 											<a href="{{ route('studies.edit', $study) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
 

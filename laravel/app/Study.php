@@ -46,6 +46,11 @@ class Study extends Model
      */
     protected $guarded = [];
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Appointment');
+    }
+
     /**
      * Returns the url path for the instance.
      *
@@ -63,9 +68,13 @@ class Study extends Model
      * @param  \App\Study  $study
      * @return selected filters
      */
-    public function babies()
+    public function getBabiesAttribute()
     {
-        return $this->belongsToMany(Baby::class)->withTimestamps();
+        $babies = array();
+        foreach($this->appointments as $a) {
+            array_push($babies, $a->baby);
+        }
+        return $babies;
     }
 
     /**
@@ -74,9 +83,8 @@ class Study extends Model
      * @param  \App\Study  self
      * @return all keys
      */
-    public function getFilterColumns() : array 
+    public function getFilterColumns() : array
     {
         return array_keys(self::$validationRules);
     }
-
 }

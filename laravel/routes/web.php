@@ -17,8 +17,8 @@ Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/babies/filter', 'BabiesController@filter')->name('babies.filter')->middleware('auth');
 
 Route::get('/babies', 'BabiesController@index')->name('babies.index')->middleware('auth');
-Route::post('/babies', 'BabiesController@store')->name('babies.store');
-Route::get('/babies/create', 'BabiesController@create')->name('babies.create');
+Route::post('/babies', 'BabiesController@store')->name('babies.store')->middleware('auth');
+Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->middleware('auth');
 Route::get('/babies/{baby}', 'BabiesController@show')->name('babies.show')->middleware('auth');
 Route::get('/babies/{baby}/edit', 'BabiesController@edit')->name('babies.edit')->middleware('auth');
 Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update')->middleware('auth');
@@ -39,3 +39,10 @@ Route::get('/users/{user}', 'UsersController@show')->name('users.show')->middlew
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit')->middleware('isAdmin');
 Route::put('/users/{user}', 'UsersController@update')->name('users.update')->middleware('isAdmin');
 Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy')->middleware('isAdmin');
+
+Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index')->middleware('auth');
+Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store')->middleware('auth');
+Route::get('/appointments/{appointment}', 'AppointmentsController@show')->name('appointments.show')->middleware('auth');
+Route::get('/appointments/{appointment}/edit', 'AppointmentsController@edit')->name('appointments.edit')->middleware('auth');
+Route::get('/appointments/create', 'AppointmentsController@create')->name('appointments.create')->middleware('auth');
+Route::put('/appointments/{appointment}', 'AppointmentsController@update')->name('appointments.update')->middleware('auth');

@@ -43,11 +43,6 @@ class Baby extends Model
 
 		//Appointment information
 		['preferred_appointment_days', 'multiselect', ['None', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], true, true, false, true],
-		['appointment_date', 'date', '', true, false, false, false],
-		['appointment_time', 'time', '', true, false, false, false],
-		['age_at_appointment', 'text', '', false, false, false, false],
-		['appointment_number', 'number', '', true, true, false, true],
-		['appointment_status', 'select', ['New', 'Contacted', 'In progress', 'Completed'], true, true, false, true],
 
         ['notes', 'text', '', true, false, false, false],
     ];
@@ -150,15 +145,13 @@ class Baby extends Model
         return $dateMonthsDays;
     }
 
-    /**
-     * Returns all the studies linked to the baby.
-     *
-     * @param  \App\Baby  $baby
-     * @return collection of studies for the selected baby
-     */
-    public function studies()
+    public function getStudiesAttribute()
     {
-        return $this->belongsToMany(Study::class)->withTimestamps();
+        $studies = array();
+        foreach($this->appointments as $a) {
+            array_push($studies, $a->study);
+        }
+        return $studies;
     }
 
 
@@ -208,5 +201,10 @@ class Baby extends Model
     public function getFilterColumns() : array
     {
         return array_keys(self::$validationRules);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany('App\Appointment');
     }
 }

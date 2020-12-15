@@ -21,7 +21,7 @@
                 <div class="row">
 			<div class="col">
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-hover table-striped">
 						<thead class="thead-light">
 							<tr>
 								<th scope="col">#</th>

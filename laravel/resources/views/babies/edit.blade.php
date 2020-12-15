@@ -96,37 +96,6 @@
 
 			@endfor
 
-			<div class="row">
-				<div class="col-3"></div>
-				<div class="col-6">
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<span class="input-group-text">Studies</span>
-						</div>
-
-						<select multiple class="custom-select form-control @error('studies') is-invalid @enderror" name="studies[]">
-
-							@foreach($studies as $study)
-
-									@if( in_array( $study->id, $babyStudiesIds ) )
-										<option value="{{ $study->id }}" selected>{{ $study->study_name }}</option>
-									@else
-										<option value="{{ $study->id }}">{{ $study->study_name }}</option>
-									@endif
-
-							@endforeach
-
-						</select>
-
-						@error('studies')
-							<div class="invalid-feedback">{{ $message }}</div>
-						@enderror
-
-					</div>
-				</div>
-				<div class="col-3"></div>
-			</div>
-
 			<div class="row mt-4">
 				<div class="col-3"></div>
 				<div class="col-6">

@@ -53,9 +53,39 @@
 		@endfor
 
 		<br>
+                <div class="row">
+                  <div class="col-3"></div>
+                  <div class="col-6">
+                    <h1 class="display-5 text-center">Appointments</h1>
+                  </div>
+                  <div class="col-3"></div>
+                </div>
+                @forelse ($baby->appointments as $appointment)
+                  <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">{{ $appointment->study->study_name }}</span>
+                        </div>
 
-		<div class="row">
-			<div class="col-3"></div>
+                        <input class="form-control" value="{{ $appointment->date }} {{ $appointment->time }}" readonly>
+                        <a href="{{ route('appointments.show', $appointment) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
+
+                      </div>
+                    </div>
+                    <div class="col-3"></div>
+                  </div>
+		@empty
+			<div class="row">
+				<div class="col-3"></div>
+				<div class="col-6">No appointments yet.</div>
+				<div class="col-3"></div>
+			</div>
+                @endforelse
+
+                <div class="row">
+                        <div class="col-3"></div>
 			<div class="col-6">
 				<h1 class="display-5 text-center">Assigned studies</h1>
 			</div>
