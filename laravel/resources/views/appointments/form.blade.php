@@ -7,31 +7,8 @@
             <span class="input-group-text">Baby</span>
           </div>
           <input class="form-control" value="{{ $appointment->baby->name }}" readonly>
+          <input name="baby" type="hidden" value="{{ $appointment->baby->id }}">
           <a href="{{ route('babies.show', $appointment->baby) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
-        </div>
-      </div>
-      <div class="col-3"></div>
-    </div>
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Date</span>
-          </div>
-          <input type="date" name="date" class="form-control" value="{{ $appointment->date }}" {{ $readonly?'readonly':'' }}>
-        </div>
-      </div>
-      <div class="col-3"></div>
-    </div>
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Time</span>
-          </div>
-          <input class="form-control" name="time" value="{{ $appointment->time }}" {{ $readonly?'readonly':'' }}>
         </div>
       </div>
       <div class="col-3"></div>
@@ -43,8 +20,62 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Study</span>
           </div>
-          <input class="form-control" value="{{ $appointment->study->study_name }}" readonly>
+          @if ($appointment->study)
+            <input class="form-control" value="{{ $appointment->study->study_name }}" readonly>
+          @else
+            <select class="form-control" name="study">
+            @foreach ($all_studies as $study)
+              <option value="{{ $study->id }}">{{ $study->study_name }}</option>
+            @endforeach
+            </select>
+          @endif
         </div>
       </div>
       <div class="col-3"></div>
     </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Date</span>
+          </div>
+          <input type="date" name="date" class="form-control" value="{{ $appointment->date }}" {{ $readonly?'readonly':'' }} required>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Time</span>
+          </div>
+          <input type="time" class="form-control" name="time" value="{{ date('H:i', strtotime($appointment->time)) }}" {{ $readonly?'readonly':'' }} required>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+    @if ($appointment->id)
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Status</span>
+          </div>
+          @if (!$appointment->editable() || $readonly)
+            <input class="form-control" value="{{ $appointment->prettyStatus() }}" readonly>
+          @else
+            <select class="form-control" name="status">
+            @foreach (constant('App\Appointment::Status') as $key=>$value)
+              <option value="{{ $key }}" {{ $key==$appointment->status?'selected':'' }}>{{ $value }}</option>
+            @endforeach
+            </select>
+          @endif
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+    @endif

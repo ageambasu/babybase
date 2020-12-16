@@ -14,6 +14,7 @@
                 <th scope="col">Baby</th>
                 <th scope="col">Appointment Number</th>
                 <th scope="col">Study</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             @foreach ($appointments as $appointment)
@@ -27,6 +28,7 @@
                 </td>
                 <td> {{ $appointment->number }} </td>
                 <td> {{ $appointment->study->study_name }} </td>
+                <td> {{ $appointment->prettyStatus() }} </td>
               </tr>
             @endforeach
           </table>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Baby;
+use App\Study;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -24,17 +26,37 @@ class AppointmentsController extends Controller
         return view('appointments.edit', ['appointment' => $appointment]);
     }
 
-    public function update(Appointment $appointment)
+    public function update(Request $request, Appointment $appointment)
     {
-        $validatedAttributes = $this->validateAppointment();
-        Log::alert($validatedAttributes);
+        $validatedAttributes = $request->validate(Appointment::$validationRulesUpdate);
         $appointment->update($validatedAttributes);
-        $appointment->sync();
-        return redirect(route('appointments.show'), $appointment);
+        return redirect(route('appointments.show', $appointment));
     }
 
-    protected function validateAppointment()
+
+    public function create(Baby $baby)
     {
-        return request()->validate(Appointment::$validationRules);
+        $appointment = new Appointment();
+        $appointment->baby = $baby;
+        return view('appointments.create', ['appointment' => $appointment,
+                                            'all_studies' => Study::all()]);
     }
+
+    public function store(Request $request)
+    {
+        $fields = $request->validate(Appointment::$validationRules);
+        $appointment = new Appointment($fields);
+        $appointment->baby_id = (int)$fields['baby'];
+        $appointment->study_id = (int)$fields['study'];
+        $appointment->save();
+        return redirect(route('appointments.show', ['appointment' => $appointment]));
+    }
+
+    public function cancel(Appointment $appointment)
+    {
+        $appointment->status = Appointment::Canceled;
+        $appointment->save();
+        return redirect(route('appointments.show', ['appointment' => $appointment]));
+    }
+
 }

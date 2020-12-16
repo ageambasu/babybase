@@ -74,7 +74,7 @@ class Study extends Model
         foreach($this->appointments as $a) {
             array_push($babies, $a->baby);
         }
-        return $babies;
+        return array_unique($babies);
     }
 
     /**

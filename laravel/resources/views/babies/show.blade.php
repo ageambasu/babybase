@@ -1,7 +1,11 @@
 @extends ('layout')
 
 @section ('content')
-
+  <style>
+   .canceled {
+       text-decoration:line-through;
+   }
+  </style>
 	<div class="container">
 
 		@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
@@ -51,6 +55,13 @@
 			</div>
 
 		@endfor
+		<div class="row mt-4">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<a href="{{ route('babies.edit', $baby) }}" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="far fa-edit"></i> Edit</a>
+			</div>
+			<div class="col-3"></div>
+		</div>
 
 		<br>
                 <div class="row">
@@ -69,7 +80,7 @@
                           <span class="input-group-text">{{ $appointment->study->study_name }}</span>
                         </div>
 
-                        <input class="form-control" value="{{ $appointment->date }} {{ $appointment->time }}" readonly>
+                        <span class="{{ $appointment->canceled()?'canceled':'' }} form-control">{{ $appointment->prettyDateTime() }}</span>
                         <a href="{{ route('appointments.show', $appointment) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 
                       </div>
@@ -83,7 +94,15 @@
 				<div class="col-3"></div>
 			</div>
                 @endforelse
+                <div class="row mt-4">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<a href="{{ route('appointments.create', $baby) }}" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="fas fa-plus-circle"></i> Add appointment</a>
+			</div>
+			<div class="col-3"></div>
+		</div>
 
+                <?php /*
                 <div class="row">
                         <div class="col-3"></div>
 			<div class="col-6">
@@ -132,14 +151,8 @@
 				<div class="col-3"></div>
 			</div>
 		@endforelse
+                */ ?>
 
 
-		<div class="row mt-4">
-			<div class="col-3"></div>
-			<div class="col-6">
-				<a href="{{ route('babies.edit', $baby) }}" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="far fa-edit"></i> Edit</a>
-			</div>
-			<div class="col-3"></div>
-		</div>
 	</div>
 @endsection
