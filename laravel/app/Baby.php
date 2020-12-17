@@ -76,10 +76,6 @@ class Baby extends Model
 
             //Appointment information
             'preferred_appointment_days' =>  'required',
-            'appointment_date' => 'nullable|date|date_format:Y-m-d',
-            'appointment_time' => 'nullable',
-            'appointment_number' => 'required|numeric',
-            'appointment_status' => 'required',
 
             'notes' => 'nullable|string|min:2|max:255',
         ];
@@ -197,7 +193,9 @@ class Baby extends Model
      */
     public function getFilterColumns() : array
     {
-        return array_keys(self::$validationRules);
+        $keys = array_keys(self::$validationRules);
+        $keys = array_diff($keys, array('preferred_appointment_days'));
+        return $keys;
     }
 
     public function appointments()

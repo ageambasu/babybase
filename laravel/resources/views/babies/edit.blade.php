@@ -1,6 +1,7 @@
 @extends ('layout')
 
 @section ('content')
+    @include('errors')
 	<form name="edit-baby" class="text-center" method="POST" action="{{ route('babies.show', $baby) }}">
 		@csrf
 		@method('PUT')

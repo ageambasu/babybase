@@ -21,6 +21,9 @@ class BabiesController extends Controller
     {
         $sortColumn = $request->get('sortColumn', 'id');
         $sortOrder = $request->get('sortOrder', 'asc');
+        if (isset($request['preferred_appointment_days'])){
+            $request['preferred_appointment_days'] = $this->daysToBits($request['preferred_appointment_days']);
+        }
 
         $babyFilterColumns = Baby::query()->getModel()->getFilterColumns();
         $babyColumns = array_filter($request->only($babyFilterColumns));
@@ -41,6 +44,10 @@ class BabiesController extends Controller
         if($study) $activeFilters['study'] = Study::find($study)->study_name;
         $activeFilters = array_merge($activeFilters, $filters->activeFilters());
         if($languages) $activeFilters['languages'] = $languages;
+
+        if (isset($activeFilters['preferred_appointment_days'])) {
+            $activeFilters['preferred_appointment_days'] = $this->bitsToDays($activeFilters['preferred_appointment_days']);
+        }
 
         return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
@@ -68,7 +75,7 @@ class BabiesController extends Controller
     public function store(Request $request)
     {
         if (isset($request['preferred_appointment_days'])){
-            $request['preferred_appointment_days'] = implode(',', $request['preferred_appointment_days']);
+            $request['preferred_appointment_days'] = $this->daysToBits($request['preferred_appointment_days']);
         }
 
         $baby = Baby::create($this->validateBaby());
@@ -93,6 +100,7 @@ class BabiesController extends Controller
      */
     public function show(Baby $baby)
     {
+        $baby->preferred_appointment_days = implode(', ', $this->bitsToDays($baby->preferred_appointment_days));
         return view('babies.show', ['baby' => $baby, 'fieldsOnDatabase' => Baby::$fieldsOnDatabase, 'studyFieldsOnDatabase' => Study::$fieldsOnDatabase]);
     }
 
@@ -110,7 +118,7 @@ class BabiesController extends Controller
             array_push($babyStudiesIds, $study->id);
         }
 
-        $baby->preferred_appointment_days = explode(',', $baby->preferred_appointment_days);
+        $baby->preferred_appointment_days = $this->bitsToDays($baby->preferred_appointment_days);
         $baby->other_languages = explode(',', $baby->other_languages);
 
         return view('babies.edit', ['baby' => $baby,
@@ -118,6 +126,34 @@ class BabiesController extends Controller
                                     'studies' => Study::all(),
                                     'babyStudiesIds' => $babyStudiesIds,
                                     'all_languages' => Language::all()]);
+    }
+
+    protected function daysToBits(array $days) {
+        if ($days[0] == 'None') {
+            return 255;
+        }
+
+        $mask = 0;
+        $week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $i = 1;
+        foreach ($week as $dow) {
+            if (in_array($dow, $days)) {
+                $mask |= $i;
+            }
+            $i = $i << 1;
+        }
+
+        return $mask;
+    }
+
+    protected function bitsToDays(int $bitmask) {
+        $week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $days = array();
+        for ($i = 0; $i < 8; $i++) {
+            if ($bitmask & (2**$i))
+                array_push($days, $week[$i] );
+        }
+        return $days;
     }
 
     /**
@@ -131,16 +167,13 @@ class BabiesController extends Controller
     {
         $validatedAttributes = $this->validateBaby();
 
-        unset( $validatedAttributes['studies'] ); //Not saving 'studies' on babies table
-
-        $validatedAttributes['preferred_appointment_days'] = implode(',', $validatedAttributes['preferred_appointment_days']);
-
         unset($validatedAttributes['other_languages']);
+
+        $validatedAttributes['preferred_appointment_days'] = $this->daysToBits($validatedAttributes['preferred_appointment_days']);
+
         $baby->update($validatedAttributes);
 
-        $baby->studies()->sync(request('studies'));
-
-        $languages = request('other_languages');
+        $languages = request('other_languages', []);
         $lang_ids = array();
         foreach($languages as $lang_name) {
             $lang = Language::firstOrCreate(['name' => $lang_name]);

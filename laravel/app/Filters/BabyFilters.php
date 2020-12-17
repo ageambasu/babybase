@@ -4,6 +4,8 @@ namespace App\Filters;
 
 use Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Query\Expression;
 
 /**
  * This helper class is used in BabiesController via dependency injection
@@ -192,7 +194,7 @@ class BabyFilters extends QueryFilter
     public function preferred_appointment_days($value = null)
     {
         if ($value) {
-            return $this->builder->where('preferred_appointment_days', $value);
+            return $this->builder->where(new Expression('preferred_appointment_days & '.$value) , '>', 0);
         }
     }
 
