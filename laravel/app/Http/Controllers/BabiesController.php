@@ -24,23 +24,23 @@ class BabiesController extends Controller
 
         $babyFilterColumns = Baby::query()->getModel()->getFilterColumns();
         $babyColumns = array_filter($request->only($babyFilterColumns));
-        $studyColumns = array_filter($request->only(
-                    Study::query()->getModel()->getFilterColumns()
-                ));
 
         $languages = $request->get('languages', []);
         $ageMin = $request->get('older_than');
         $ageMax = $request->get('younger_than');
+        $study = $request->get('study', null);
 
         $babies = Baby::filterBabies($babyColumns)
-                ->filterStudies($studyColumns)
+                ->filterStudy($study)
                 ->filterLanguages($languages);
 
         $filters->apply($babies);
 
-        $activeFilters = array_merge($babyColumns, $studyColumns);
+        $activeFilters = array_merge(array(), $babyColumns);
+
+        if($study) $activeFilters['study'] = Study::find($study)->study_name;
         $activeFilters = array_merge($activeFilters, $filters->activeFilters());
-        if($languages) $activeFilters = array_merge($activeFilters, array('languages' => $languages));
+        if($languages) $activeFilters['languages'] = $languages;
 
         return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
@@ -177,8 +177,8 @@ class BabiesController extends Controller
 
         return view('babies.filter', ['allValueTypes' => $allValueTypes,
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
-                                      'studyFieldsOnDatabase' => Study::$fieldsOnDatabase,
-                                      'all_languages' => Language::all()]);
+                                      'all_languages' => Language::all(),
+                                      'all_studies' => Study::all()]);
     }
 
     /**

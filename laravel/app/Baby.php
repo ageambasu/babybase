@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Appointment;
 use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +24,7 @@ class Baby extends Model
 	static $fieldsOnDatabase = [
 		//Personal information
 		['name', 'text', '', true, true, true, false],
-		['application_date', 'date', '', true, true, false, true],
+		['application_date', 'date', '', true, true, false, false],
 		['dob', 'date', '', true, true, false, false],
 		['older_than', 'text', [], false, false, false, true],
 		['younger_than', 'text', [], false, false, false, true],
@@ -37,7 +38,7 @@ class Baby extends Model
 		['email', 'email', '', true, true, false, false],
 		['street', 'text', '', true, false, false, false],
 		['house_number', 'number', '', true, false, false, false],
-		['postcode', 'text', '', true, false, false, true],
+		['postcode', 'text', '', true, false, false, false],
 		['city', 'text', '', true, false, true, true],
 		['recruitment_source', 'select', ['Mail', 'Website', 'Flyer consultatiebureau', 'Flyer daycare', 'Friend', 'Facebook'], true, true, false, true],
 
@@ -179,15 +180,11 @@ class Baby extends Model
         }
     }
 
-    public function scopeFilterStudies($query, array $filters = [])
+    public function scopeFilterStudy($query, $study_id)
     {
-        if ($filters) {
-            return $this->whereHas('studies' , function ($query) use ($filters) {
-                foreach ($filters as $column => $value) {
-                    if (in_array($column, $query->getModel()->getFilterColumns())) {
-                        $query->where($column, '=', $value);
-                    }
-                }
+        if ($study_id) {
+            return $this->whereHas('appointments' , function ($query) use ($study_id) {
+                $query->where('study_id', $study_id)->where('status', '!=', Appointment::Canceled);
             });
         }
     }
