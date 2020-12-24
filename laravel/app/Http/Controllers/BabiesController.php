@@ -278,4 +278,23 @@ class BabiesController extends Controller
             'studies' => 'exists:studies,id',
         ]);
     }
+
+    public function signups(Request $request)
+    {
+        $sortColumn = $request->get('sortColumn', 'id');
+        $sortOrder = $request->get('sortOrder', 'asc');
+
+        $babies = Baby::signups();
+        return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
+                                      'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                      'activeFilters' => array()]);
+
+    }
+
+    public function signupApprove(Baby $baby)
+    {
+        $baby->approved = true;
+        $baby->save();
+        return redirect(route('babies.show', $baby));
+    }
 }

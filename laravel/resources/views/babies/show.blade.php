@@ -61,6 +61,17 @@
 				<a href="{{ route('babies.edit', $baby) }}" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="far fa-edit"></i> Edit</a>
 			</div>
 			<div class="col-3"></div>
+                        @if (!$baby->approved)
+                            <div class="col-3"></div>
+                            <div class="col-6">
+                              <form action="{{ route('signups.approve', $baby) }}" method="post">
+                                @method('PUT')
+                                @csrf
+                                    <button type="submit" style="margin-top:7px" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="far fa-check-circle"></i> Approve Signup</button>
+                              </form>
+                            </div>
+                            <div class="col-3"></div>
+                        @endif
 		</div>
 
 		<br>

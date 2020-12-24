@@ -185,6 +185,12 @@ class Baby extends Model
         }
     }
 
+    public function scopeSignups($query)
+    {
+        return $this->where('approved', false);
+    }
+
+
     /**
      * Returns all keys of Baby.
      *
