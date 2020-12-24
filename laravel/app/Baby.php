@@ -154,6 +154,8 @@ class Baby extends Model
 
     public function scopeFilterBabies($query, array $filters = [])
     {
+        $query->where('approved', true);
+
         if ($filters) {
             foreach ($filters as $column => $value) {
                 if (in_array($column, $this->getFilterColumns())) {
