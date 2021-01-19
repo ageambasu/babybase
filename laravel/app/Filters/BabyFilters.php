@@ -275,4 +275,13 @@ class BabyFilters extends QueryFilter
             return $this->builder->where('prevous_studies_completed', $value);
         }
     }
+
+    public function search($value = null)
+    {
+        if ($value) {
+            return $this->builder->where(
+                'name', 'like', '%'.$value.'%')->orWhere(
+                    'parent_lastname', 'like', '%'.$value.'%');
+        }
+    }
 }

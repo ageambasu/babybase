@@ -124,14 +124,23 @@
 				<a href="{{route('babies.create')}}" class="btn btn-outline-info mb-4" role="button">
 					<i class="fas fa-plus-circle"></i> Create a new record
 				</a>
+				<a href="{{route('babies.filter')}}" class="btn btn-outline-info mb-4" role="button">
+					<i class="fas fa-plus-circle"></i> Create a new filter
+				</a>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col">
-				<a href="{{route('babies.filter')}}" class="btn btn-outline-info mb-4" role="button">
-					<i class="fas fa-plus-circle"></i> Create a new filter
-				</a>
+			<div class="col-6">
+                          <form>
+                            <label for="name">Search by name or last name:</label>
+                            <div class="input-group">
+                              <input class="form-control" type="text" name="search">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-info" type="button">Search</button>
+                              </div>
+                            </div>
+                          </form>
 			</div>
 		</div>
 	</div>
