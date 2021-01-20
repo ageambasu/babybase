@@ -30,7 +30,7 @@ class Baby extends Model
 		['younger_than', 'text', [], false, false, false, true],
 		['age_today', 'text', [], false, false, true, false],
 		['sex', 'select', ['Female', 'Male'], true, true, true, true],
-		['monolingual_dutch', 'select', ['Yes', 'No'], true, true, true, true],
+		['monolingual_dutch', 'boolean', ['Yes', 'No'], true, true, true, true],
 		['has_sibling', 'boolean', ['Yes', 'No'], true, true, false, true],
 		['other_languages', 'multiselect', [], true, false, false, true],
 		['parent_firstname', 'text', '', true, true, false, false],

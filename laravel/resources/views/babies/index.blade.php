@@ -77,6 +77,9 @@
 
 										@if ($fieldOnIndex)
 
+                                                                                  @if ($fieldsOnDatabase[$i][1] == 'boolean')
+                                                                                    <td>{{ $baby->$fieldName ? 'Yes':'No' }}</td>
+                                                                                  @else
 											@switch($fieldName)
 												@case('age_today')
 													<td>{{ $baby->getBabyAgeToday() }}</td>
@@ -85,6 +88,7 @@
 												@default
 													<td>{{ $baby->$fieldName }}</td>
 											@endswitch
+                                                                                   @endif
 
 										@endif
 
