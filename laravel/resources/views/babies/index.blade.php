@@ -115,7 +115,7 @@
 			</div>
 		</div>
 
-                @if ($total)
+                @if (isset($total))
                 <div class="row">
                   <div class="col">
                     <strong>{{ $total }} records match filters</strong>

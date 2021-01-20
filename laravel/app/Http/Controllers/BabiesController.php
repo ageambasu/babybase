@@ -300,6 +300,7 @@ class BabiesController extends Controller
 
         $babies = Baby::signups();
         return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
+                                      'total' => $babies->count(),
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
                                       'activeFilters' => array()]);
 
