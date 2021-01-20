@@ -155,7 +155,12 @@ class Baby extends Model
     public function getRelatedAttribute()
     {
         return Baby::where(function($q) {
-            $q->where('phone', $this->phone)->orWhere('email', $this->email);
+            if ($this->phone) {
+                $q->where('phone', $this->phone);
+            }
+            if ($this->email) {
+                $q->orWhere('email', $this->email);
+            }
         })->where('id', '!=', $this->id)->get();
     }
 
