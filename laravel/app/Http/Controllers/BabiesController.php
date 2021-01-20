@@ -57,7 +57,9 @@ class BabiesController extends Controller
             }
         }
 
-        return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
+        $results = $babies->orderBy($sortColumn, $sortOrder);
+        return view ('babies.index', ['babies' => $results->paginate(10),
+                                      'total' => $results->count(),
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
                                       'activeFilters' => $activeFilters]);
 

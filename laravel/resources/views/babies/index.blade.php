@@ -115,6 +115,13 @@
 			</div>
 		</div>
 
+                @if ($total)
+                <div class="row">
+                  <div class="col">
+                    <strong>{{ $total }} records match filters</strong>
+                  </div>
+                </div>
+                @endif
 		<div class="row">
 			<div class="col">
 				<div class="custom-pagination mb-4 d-flex justify-content-center">
