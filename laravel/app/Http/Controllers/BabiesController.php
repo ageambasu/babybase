@@ -80,7 +80,7 @@ class BabiesController extends Controller
 
         $baby = Baby::create($this->validateBaby());
 
-        $languages = request('other_languages');
+        $languages = request('other_languages', []);
         $lang_ids = array();
         foreach($languages as $lang_name) {
             $lang = Language::firstOrCreate(['name' => $lang_name]);
