@@ -89,6 +89,10 @@ class BabiesController extends Controller
 
         $baby->languages()->sync($lang_ids);
 
+        // when creating a new baby record in the system, it should be automatically approved
+        $baby->approved = true;
+        $baby->save();
+
         return redirect(route('babies.index'));
     }
 

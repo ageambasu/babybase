@@ -74,9 +74,6 @@ class Baby extends Model
             'city' =>  'nullable|string|min:2|max:255',
             'recruitment_source' =>  'required',
 
-            //Appointment information
-            'preferred_appointment_days' =>  'required',
-
             'notes' => 'nullable|string|min:2|max:255',
         ];
 
@@ -153,7 +150,9 @@ class Baby extends Model
 
     public function getRelatedAttribute()
     {
-        return Baby::where('phone', $this->phone)->orWhere('email', $this->email)->get();
+        return Baby::where(function($q) {
+            $q->where('phone', $this->phone)->orWhere('email', $this->email);
+        })->where('id', '!=', $this->id)->get();
     }
 
 
