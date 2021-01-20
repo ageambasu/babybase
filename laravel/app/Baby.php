@@ -151,6 +151,11 @@ class Baby extends Model
         return $studies;
     }
 
+    public function getRelatedAttribute()
+    {
+        return Baby::where('phone', $this->phone)->orWhere('email', $this->email)->get();
+    }
+
 
     public function scopeFilterBabies($query, array $filters = [])
     {

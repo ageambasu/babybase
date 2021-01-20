@@ -133,7 +133,7 @@
 		<div class="row">
 			<div class="col-6">
                           <form>
-                            <label for="name">Search by name or last name:</label>
+                            <label for="name">Search by first or last name:</label>
                             <div class="input-group">
                               <input class="form-control" type="text" name="search">
                               <div class="input-group-append">

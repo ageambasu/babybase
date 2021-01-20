@@ -112,58 +112,28 @@
 			</div>
 			<div class="col-3"></div>
 		</div>
-
-                <?php /*
-                <div class="row">
+                <div class="row mt-3">
+                  <div class="col-3"></div>
+                  <div class="col-6">
+                    <h1 class="display-5 text-center">Related babies</h1>
+                  </div>
+                  <div class="col-3"></div>
+                </div>
+                @foreach ($baby->related as $b)
+                      <div class="row">
                         <div class="col-3"></div>
-			<div class="col-6">
-				<h1 class="display-5 text-center">Assigned studies</h1>
-			</div>
-			<div class="col-3"></div>
-		</div>
+                        <div class="col-6">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Name</span>
+                            </div>
 
-		@forelse ($baby->studies as $study)
-			@for ($i = 0; $i < count($studyFieldsOnDatabase); $i++)
-
-				@php ($studyFieldName = $studyFieldsOnDatabase[$i][0])
-				@php ($studyFieldNameOnForm = ucfirst(str_replace ("_", " ", $studyFieldName)))
-				@php ($studyFieldType = $studyFieldsOnDatabase[$i][1])
-				@php ($studyFieldValues = $studyFieldsOnDatabase[$i][2])
-				@php ($studyFieldOnForm = $studyFieldsOnDatabase[$i][3])
-				@php ($studyFieldRequiredOnForm = $studyFieldsOnDatabase[$i][4])
-				@php ($studyFieldOnIndex = $studyFieldsOnDatabase[$i][5])
-				@php ($studyFieldOnFilter = $studyFieldsOnDatabase[$i][6])
-
-				@if($studyFieldName == 'study_name')
-					<div class="row">
-						<div class="col-3"></div>
-						<div class="col-6">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">{{ $studyFieldNameOnForm }}</span>
-								</div>
-
-								<input type="{{ $studyFieldType }}" class="form-control" name="{{ $studyFieldName }}" value="{{ $study->$studyFieldName }}" readonly>
-
-								<a href="{{ route('studies.show', $study) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
-
-							</div>
-						</div>
-						<div class="col-3"></div>
-					</div>
-				@endif
-
-			@endfor
-
-		@empty
-			<div class="row">
-				<div class="col-3"></div>
-				<div class="col-6">No assigned studies yet.</div>
-				<div class="col-3"></div>
-			</div>
-		@endforelse
-                */ ?>
-
-
+                            <input type="text" class="form-control" name="name" value="{{ $b->name }}" readonly>
+                            <a href="{{ route('babies.show', $b) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
+                          </div>
+                        </div>
+                        <div class="col-3"></div>
+                      </div>
+                @endforeach
 	</div>
 @endsection
