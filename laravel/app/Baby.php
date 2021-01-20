@@ -31,6 +31,7 @@ class Baby extends Model
 		['age_today', 'text', [], false, false, true, false],
 		['sex', 'select', ['Female', 'Male'], true, true, true, true],
 		['monolingual_dutch', 'select', ['Yes', 'No'], true, true, true, true],
+		['has_sibling', 'boolean', ['Yes', 'No'], true, true, false, true],
 		['other_languages', 'multiselect', [], true, false, false, true],
 		['parent_firstname', 'text', '', true, true, false, false],
 		['parent_lastname', 'text', '', true, true, false, false],
@@ -73,6 +74,9 @@ class Baby extends Model
             'postcode' =>  'nullable|string|min:2|max:255',
             'city' =>  'nullable|string|min:2|max:255',
             'recruitment_source' =>  'required',
+
+            'preferred_appointment_days' =>  'nullable',
+            'has_sibling' =>  'nullable',
 
             'notes' => 'nullable|string|min:2|max:255',
         ];

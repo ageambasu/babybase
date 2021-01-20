@@ -31,6 +31,14 @@
 
 								@switch($fieldType)
 
+									@case('boolean')
+										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+											<option value=''>Choose...</option>
+                                                                                        <option value="0" {{ !$baby->$fieldName?"selected":"" }}>No</option>
+                                                                                        <option value="1" {{ $baby->$fieldName?"selected":"" }}>Yes</option>
+
+                                                                                </select>
+									@break
 									@case('select')
 										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
 											<option value=''>Choose...</option>

@@ -54,6 +54,10 @@
                                                                                 <select class="custom-select form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}">
                                                                                         <option value=''>Filter by...</option>
 
+                                                                                        @if($fieldType == 'boolean')
+                                                                                          <option value="0">No</option>
+                                                                                          <option value="1">Yes</option>
+                                                                                        @else
                                                                                                         @foreach($allValueTypes as $key => $values)
 
 														@if($key == $fieldName)
@@ -67,6 +71,7 @@
 														@endif
 
 													@endforeach
+                                                                                        @endif
 
 										</select>
 

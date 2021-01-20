@@ -49,6 +49,14 @@ class BabiesController extends Controller
             $activeFilters['preferred_appointment_days'] = $this->bitsToDays($activeFilters['preferred_appointment_days']);
         }
 
+        for ($i = 0; $i < count(Baby::$fieldsOnDatabase); $i++) {
+            $fieldName = Baby::$fieldsOnDatabase[$i][0];
+            $fieldType = Baby::$fieldsOnDatabase[$i][1];
+            if($fieldType == 'boolean' && isset($activeFilters[$fieldName])) {
+                $activeFilters[$fieldName] = $activeFilters[$fieldName] ? 'Yes' : 'No';
+            }
+        }
+
         return view ('babies.index', ['babies' => $babies->orderBy($sortColumn, $sortOrder)->paginate(10),
                                       'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
                                       'activeFilters' => $activeFilters]);

@@ -27,27 +27,31 @@
 							<span class="input-group-text">{{ $fieldNameOnForm }}</span>
 						</div>
 
-						@switch($fieldName)
-							@case('age_today')
-								<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeToday() }}" readonly>
-							@break
+                                                @if($fieldType == 'boolean')
+                                                  <input class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName?'Yes':'No' }}" readonly>
+                                                @else
+                                                  @switch($fieldName)
+                                                    @case('age_today')
+                                                      <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeToday() }}" readonly>
+                                                                                                        @break
 
-							@case('age_at_appointment')
-								@if($baby->appointment_date)
-									<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeAtAppointment() }}" readonly>
-								@endif
-							@break
+                                                      @case('age_at_appointment')
+                                                        @if($baby->appointment_date)
+                                                          <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->getBabyAgeAtAppointment() }}" readonly>
+                                                        @endif
+                                                                                                            @break
 
                                                         @case('other_languages')
                                                           <select class="custom-select form-control" multiple="multiple" readonly>
-                                                          @foreach ($baby->languages as $lang)
-                                                            <option value="{{$lang->id}}">{{ $lang->name }}</option>
-                                                          @endforeach
+                                                            @foreach ($baby->languages as $lang)
+                                                              <option value="{{$lang->id}}">{{ $lang->name }}</option>
+                                                            @endforeach
                                                           </select>
-                                                        @break
-                                                        @default
-                                                                <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName }}" readonly>
-						@endswitch
+                                                                                                                @break
+                                                          @default
+                                                          <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName }}" readonly>
+						  @endswitch
+                                                @endif
 
 					</div>
 				</div>
