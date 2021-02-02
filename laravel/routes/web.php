@@ -49,3 +49,6 @@ Route::get('/appointments/{appointment}/edit', 'AppointmentsController@edit')->n
 Route::get('/appointments/create/{baby}', 'AppointmentsController@create')->name('appointments.create')->middleware('auth');
 Route::put('/appointments/{appointment}', 'AppointmentsController@update')->name('appointments.update')->middleware('auth');
 Route::delete('/appointments/{appointment}', 'AppointmentsController@cancel')->name('appointments.cancel')->middleware('auth');
+
+Route::get('/languages', 'LanguagesController@index')->name('languages.index')->middleware('isAdmin');
+Route::post('/languages', 'LanguagesController@store')->name('languages.store')->middleware('isAdmin');
