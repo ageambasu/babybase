@@ -163,7 +163,7 @@ class BabiesController extends Controller
     protected function bitsToDays(int $bitmask) {
         $week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
         $days = array();
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             if ($bitmask & (2**$i))
                 array_push($days, $week[$i] );
         }
@@ -183,7 +183,9 @@ class BabiesController extends Controller
 
         unset($validatedAttributes['other_languages']);
 
-        $validatedAttributes['preferred_appointment_days'] = $this->daysToBits($validatedAttributes['preferred_appointment_days']);
+        if (isset($validatedAttributes['preferred_appointment_days'])){
+            $validatedAttributes['preferred_appointment_days'] = $this->daysToBits($validatedAttributes['preferred_appointment_days']);
+        }
 
         $baby->update($validatedAttributes);
 
