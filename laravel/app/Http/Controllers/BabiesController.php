@@ -88,6 +88,10 @@ class BabiesController extends Controller
             $request['preferred_appointment_days'] = $this->daysToBits($request['preferred_appointment_days']);
         }
 
+        if (isset($request['phone'])) {
+            $request['phone'] = str_replace(['-', '+', ' '], '', $request['phone']);
+        }
+
         $baby = Baby::create($this->validateBaby());
 
         $languages = request('other_languages', []);
