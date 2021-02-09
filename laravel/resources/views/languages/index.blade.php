@@ -8,12 +8,16 @@
             <thead class="thead-light">
               <tr>
                 <th scope="col">Name (English)</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($languages as $lang)
                 <tr>
                   <td>{{ $lang->name }}</td>
+                  <td>
+                    <a href="{{ route('languages.rename', $lang) }}">Rename</a>
+                  </td>
                 </tr>
               @endforeach
             </tbody>

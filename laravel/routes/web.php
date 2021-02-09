@@ -52,3 +52,5 @@ Route::delete('/appointments/{appointment}', 'AppointmentsController@cancel')->n
 
 Route::get('/languages', 'LanguagesController@index')->name('languages.index')->middleware('isAdmin');
 Route::post('/languages', 'LanguagesController@store')->name('languages.store')->middleware('isAdmin');
+Route::get('/languages/{language}/rename', 'LanguagesController@rename')->name('languages.rename')->middleware('isAdmin');
+Route::put('/languages/{language}', 'LanguagesController@update')->name('languages.update')->middleware('auth');
