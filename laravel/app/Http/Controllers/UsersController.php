@@ -24,9 +24,9 @@ class UsersController extends Controller
             return view ('users.index', ['users' => User::where('id', '>', 0)->orderBy($sortColumn, $sortOrder)->paginate(10), 'fieldsOnDatabase' => User::$fieldsOnDatabase]);
 
         } else {
-            
+
             return view ('users.index', ['users' => User::where('id', '>', 0)->paginate(10), 'fieldsOnDatabase' => User::$fieldsOnDatabase]);
-        
+
         }
     }
 
@@ -47,7 +47,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
+    {
         $this->validateUser();
 
         User::create([
