@@ -53,6 +53,15 @@ class Baby extends Model
         ['notes', 'text', '', true, false, false, false],
     ];
 
+    static $prettyNames = [ 'dob' => 'Date of birth' ];
+
+    public static function fieldName($key) {
+        if (isset(self::$prettyNames[$key])) {
+            return self::$prettyNames[$key];
+        }
+        return ucfirst(str_replace('_', ' ', $key));
+    }
+
     public function languages() {
         return $this->belongsToMany('App\Language');
     }

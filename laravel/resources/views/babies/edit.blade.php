@@ -11,7 +11,7 @@
 			@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
 				@php ($fieldName = $fieldsOnDatabase[$i][0])
-				@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
+                                @php ($fieldNameOnForm = App\Baby::fieldName($fieldName))
 				@php ($fieldType = $fieldsOnDatabase[$i][1])
 				@php ($fieldValues = $fieldsOnDatabase[$i][2])
 				@php ($fieldOnForm = $fieldsOnDatabase[$i][3])
