@@ -92,7 +92,10 @@ class BabiesController extends Controller
             $request['phone'] = str_replace(['-', '+', ' '], '', $request['phone']);
         }
 
-        $baby = Baby::create($this->validateBaby());
+        $validated = $this->validateBaby();
+    	$validated['application_date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['application_date'])->format('Y-m-d');
+    	$validated['dob'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['dob'])->format('Y-m-d');
+        $baby = Baby::create($validated);
 
         $languages = request('other_languages', []);
         $lang_ids = array();
@@ -183,15 +186,17 @@ class BabiesController extends Controller
      */
     public function update(Baby $baby)
     {
-        $validatedAttributes = $this->validateBaby();
+        $validated = $this->validateBaby();
 
-        unset($validatedAttributes['other_languages']);
+        unset($validated['other_languages']);
 
-        if (isset($validatedAttributes['preferred_appointment_days'])){
-            $validatedAttributes['preferred_appointment_days'] = $this->daysToBits($validatedAttributes['preferred_appointment_days']);
+        if (isset($validated['preferred_appointment_days'])){
+            $validated['preferred_appointment_days'] = $this->daysToBits($validated['preferred_appointment_days']);
         }
 
-        $baby->update($validatedAttributes);
+    	$validated['application_date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['application_date'])->format('Y-m-d');
+    	$validated['dob'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['dob'])->format('Y-m-d');
+        $baby->update($validated);
 
         $languages = request('other_languages', []);
         $lang_ids = array();
@@ -202,8 +207,7 @@ class BabiesController extends Controller
 
         $baby->languages()->sync($lang_ids);
 
-        //return redirect(route('babies.show', $baby));
-        return redirect(route('babies.index'));
+        return redirect(route('babies.show', $baby));
     }
 
     /**

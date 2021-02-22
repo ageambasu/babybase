@@ -30,6 +30,10 @@
 								</div>
 
 								@switch($fieldType)
+                                                                  @case('date')
+                                                                    <input class="datepicker form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName->format('d/m/Y') }}">
+                                                                    @break
+
 
 									@case('boolean')
 										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
@@ -117,6 +121,8 @@
         <script type="text/javascript">
          $(function() {
              $(document.forms['edit-baby']['other_languages[]']).select2({tags:true});
+
+             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
          });
         </script>
 @endsection

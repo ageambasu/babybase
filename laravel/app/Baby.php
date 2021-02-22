@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Baby extends Model
 {
+    protected $dates = ['application_date', 'dob'];
+    protected $casts = [
+        'dob' => 'datetime:d/m/Y',
+    ];
 	/**
      * The dataframe equivalent.
      *
@@ -61,8 +65,8 @@ class Baby extends Model
     public static $validationRules = [
             //Personal information
             'name' => 'required|string|min:2|max:255',
-            'application_date' => 'required|date|date_format:Y-m-d',
-            'dob' => 'required|date',
+            'application_date' => 'required|date|date_format:d/m/Y',
+            'dob' => 'required|date|date_format:d/m/Y',
             'sex' => 'required',
             'monolingual_dutch' => 'required',
             'parent_firstname' => 'required|string|min:2|max:255',
@@ -107,32 +111,7 @@ class Baby extends Model
      */
     public function getBabyAgeToday()
     {
-    	$dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);
-
-        $carbonDate = $dobToDate->diff(\Carbon\Carbon::now())->format('%y,%m,%d');
-
-        $carbonArray = explode(',', $carbonDate);
-
-        $dateMonthsDays=[0=>(int)$carbonArray[0] * 12 + (int)$carbonArray[1], 1=>(int)$carbonArray[2]];
-
-        $dateMonthsDays = implode(';', $dateMonthsDays);
-
-        return $dateMonthsDays;
-    }
-
-    /**
-     * Returns the age of a baby at the appointment date.
-     *
-     * @param  \App\Baby  $baby->dob
-     * @param  \App\Baby  $baby->appointment_date
-     * @return age at appointment
-     */
-    public function getBabyAgeAtAppointment()
-    {
-        $dobToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->dob);
-        $appDateToDate = \Carbon\Carbon::createFromFormat('Y-m-d', $this->application_date);
-
-        $carbonDate = $dobToDate->diff($appDateToDate)->format('%y,%m,%d');
+        $carbonDate = $this->dob->diff(\Carbon\Carbon::now())->format('%y,%m,%d');
 
         $carbonArray = explode(',', $carbonDate);
 
