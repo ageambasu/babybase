@@ -1,128 +1,128 @@
 @extends ('layout')
 
 @section ('content')
-    @include('errors')
-	<form name="edit-baby" class="text-center" method="POST" action="{{ route('babies.show', $baby) }}">
-		@csrf
-		@method('PUT')
+  @include('errors')
+  <form name="edit-baby" class="text-center" method="POST" action="{{ route('babies.show', $baby) }}">
+    @csrf
+    @method('PUT')
 
-		<div class="container">
+    <div class="container">
 
-			@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
+      @for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
-				@php ($fieldName = $fieldsOnDatabase[$i][0])
-                                @php ($fieldNameOnForm = App\Baby::fieldName($fieldName))
-				@php ($fieldType = $fieldsOnDatabase[$i][1])
-				@php ($fieldValues = $fieldsOnDatabase[$i][2])
-				@php ($fieldOnForm = $fieldsOnDatabase[$i][3])
-				@php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
-				@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-				@php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
+        @php ($fieldName = $fieldsOnDatabase[$i][0])
+        @php ($fieldNameOnForm = App\Baby::fieldName($fieldName))
+        @php ($fieldType = $fieldsOnDatabase[$i][1])
+        @php ($fieldValues = $fieldsOnDatabase[$i][2])
+        @php ($fieldOnForm = $fieldsOnDatabase[$i][3])
+        @php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
+        @php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
+        @php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
 
-				@if ($fieldOnForm)
+        @if ($fieldOnForm)
 
-					<div class="row">
-						<div class="col-3"></div>
-						<div class="col-6">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">{{ $fieldNameOnForm }}</span>
-								</div>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">{{ $fieldNameOnForm }}</span>
+                </div>
 
-								@switch($fieldType)
-                                                                  @case('date')
-                                                                    <input class="datepicker form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName->format('d/m/Y') }}">
-                                                                    @break
+                @switch($fieldType)
+                  @case('date')
+                    <input class="datepicker form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName->format('d/m/Y') }}">
+                                    @break
 
 
-									@case('boolean')
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
-											<option value=''>Choose...</option>
-                                                                                        <option value="0" {{ !$baby->$fieldName?"selected":"" }}>No</option>
-                                                                                        <option value="1" {{ $baby->$fieldName?"selected":"" }}>Yes</option>
+                    @case('boolean')
+                      <select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+                        <option value=''>Choose...</option>
+                        <option value="0" {{ !$baby->$fieldName?"selected":"" }}>No</option>
+                        <option value="1" {{ $baby->$fieldName?"selected":"" }}>Yes</option>
 
-                                                                                </select>
-									@break
-									@case('select')
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
-											<option value=''>Choose...</option>
+                      </select>
+                                        @break
+                      @case('select')
+                        <select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+                          <option value=''>Choose...</option>
 
-											@foreach($fieldValues as $key => $fieldValue)
+                          @foreach($fieldValues as $key => $fieldValue)
 
-												<option value="{{ $fieldValue }}" {{ (($baby->$fieldName) == $fieldValue ? "selected":"") }}>{{ $fieldValue }}</option>
+                            <option value="{{ $fieldValue }}" {{ (($baby->$fieldName) == $fieldValue ? "selected":"") }}>{{ $fieldValue }}</option>
 
-											@endforeach
-										</select>
-									@break
+                          @endforeach
+                        </select>
+                                            @break
 
-									@case('multiselect')
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}[]" multiple="multiple">
+                        @case('multiselect')
+                          <select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}[]" multiple="multiple">
 
-											@foreach($fieldValues as $key => $fieldValue)
+                            @foreach($fieldValues as $key => $fieldValue)
 
-												<option value="{{ $fieldValue }}"
+                              <option value="{{ $fieldValue }}"
 
-												<?php
-												foreach($baby->$fieldName as $key => $multiValue) {
-													if ($multiValue == $fieldValue) {
-												?> selected <?php
-													}
-												}
-												?>
+                                <?php
+                                foreach($baby->$fieldName as $key => $multiValue) {
+                                if ($multiValue == $fieldValue) {
+                                ?> selected <?php
+                                }
+                                }
+                                ?>
 
-												>{{ $fieldValue }}</option>
+                                >{{ $fieldValue }}</option>
 
-											@endforeach
+                            @endforeach
 
-                                                                                        @if ($fieldName == 'other_languages')
-                                                                                          <?php
-                                                                                          $selected_languages = array();
-                                                                                          foreach($baby->languages as $lang) {
-                                                                                          ?>
-                                                                                            <option value="{{$lang->name}}" selected="selected">{{ $lang->name }}</option>
-                                                                                          <?php
-                                                                                            array_push($selected_languages, $lang->id);
-                                                                                          }
-                                                                                          foreach($all_languages as $lang) {
-                                                                                            if (!in_array($lang->id, $selected_languages)) { ?>
-                                                                                            <option value="{{$lang->name}}">{{ $lang->name }}</option>
-                                                                                            <?php }
-                                                                                            }?>
-                                                                                        @endif
-										</select>
-									@break
+                            @if ($fieldName == 'other_languages')
+                              <?php
+                              $selected_languages = array();
+                              foreach($baby->languages as $lang) {
+                              ?>
+                              <option value="{{$lang->name}}" selected="selected">{{ $lang->name }}</option>
+                              <?php
+                              array_push($selected_languages, $lang->id);
+                              }
+                              foreach($all_languages as $lang) {
+                              if (!in_array($lang->id, $selected_languages)) { ?>
+                              <option value="{{$lang->name}}">{{ $lang->name }}</option>
+                              <?php }
+                              }?>
+                            @endif
+                          </select>
+                                                @break
 
-									@default
-										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName }}">
+                          @default
+                          <input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName }}">
 
-								@endswitch
+                @endswitch
 
-								@error($fieldName)
-									<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
-								@enderror
-							</div>
-						</div>
-						<div class="col-3"></div>
-					</div>
+                @error($fieldName)
+                <div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
+                @enderror
+              </div>
+            </div>
+            <div class="col-3"></div>
+          </div>
 
-				@endif
+        @endif
 
-			@endfor
+      @endfor
 
-			<div class="row mt-4">
-				<div class="col-3"></div>
-				<div class="col-6">
-					<button class="btn btn-lg btn-outline-primary btn-block" type="submit">Submit</button>
-				</div>
-				<div class="col-3"></div>
-			</div>
-		</div>
-	</form>
-        <script type="text/javascript">
-         $(function() {
-             $(document.forms['edit-baby']['other_languages[]']).select2({tags:true});
+      <div class="row mt-4">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Submit</button>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </form>
+  <script type="text/javascript">
+   $(function() {
+       $(document.forms['edit-baby']['other_languages[]']).select2({tags:true});
 
-             $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
-         });
-        </script>
+       $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+   });
+  </script>
 @endsection
