@@ -80,7 +80,7 @@ class Baby extends Model
             'monolingual_dutch' => 'required',
             'parent_firstname' => 'required|string|min:2|max:255',
             'parent_lastname' => 'required|string|min:2|max:255',
-            'phone' =>  'nullable|numeric|digits_between:3,16',
+            'phone' =>  'nullable|string',
             'email' => 'required|email',
             'street' => 'nullable|string|min:2|max:255',
             'house_number' =>  'nullable|numeric',

@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-datepicker": "^1.9.0",
+        "intl-tel-input": "^17.0.12",
         "select2": "^4.0.13"
     }
 }

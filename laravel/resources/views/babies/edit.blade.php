@@ -93,8 +93,11 @@
                                                 @break
 
                           @default
-                          <input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName }}">
-
+                          @if ($fieldName == 'phone')
+                            @include('phonefield', ['value' => $baby->phone])
+                          @else
+                            <input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName }}">
+                          @endif
                 @endswitch
 
                 @error($fieldName)
