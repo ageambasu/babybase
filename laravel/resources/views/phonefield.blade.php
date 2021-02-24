@@ -2,7 +2,7 @@
 <script>
  const input = document.querySelector("#phone");
  intlTelInput(input, {customContainer:'form-control', initialCountry: 'nl', hiddenInput: 'phone',
-                      utilsScript:"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js"});
+                      utilsScript:"{{ asset('js/itiUtils.js') }}" });
 </script>
 <style>
  .iti input {
