@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Mail\NewUserMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -50,12 +52,13 @@ class UsersController extends Controller
     {
         $this->validateUser();
 
-        User::create([
+        $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'isAdmin' => $request['isAdmin'],
         ]);
+        Mail::to($request['email'])->send(new NewUserMail($user));
 
         return redirect(route('users.index'));
     }
