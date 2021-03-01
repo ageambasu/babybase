@@ -78,13 +78,13 @@ Vagrant.configure("2") do |config|
 
     rm -rf /var/www/html
     sed -i s,/var/www/html,/var/www/laravel/public,g /etc/apache2/sites-available/000-default.conf
-    sed -i '1s,^,<Directory /var/www/>\n\tAllowOverride All\n</Directory>\n,' /etc/apache2/sites-available/000-default.conf
+    sed -i '1s,^,<Directory /var/www/>\\n\\tAllowOverride All\\n</Directory>\\n,' /etc/apache2/sites-available/000-default.conf
 
     ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled
     service apache2 restart
 
     echo "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';" | mysql -uroot
-    echo "CREATE DATABASE babybase;" | mysql -uroot
+    echo "CREATE DATABASE babybase;" | mysql -uroot --password=root
 
     sed -i "s,PasswordAuthentication no,PasswordAuthentication yes,g" /etc/ssh/sshd_config
     service ssh restart
