@@ -40,7 +40,9 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Date</span>
           </div>
-          <input type="date" name="date" class="form-control" value="{{ $appointment->date }}" {{ $readonly?'readonly':'' }} required>
+          <input class="datepicker form-control @error("date") is-invalid @enderror" name="date" required value="{{ $appointment->date?$appointment->date->format('d/m/Y'):\Carbon\Carbon::now()->format("d/m/Y") }}"
+                 data-date-today-btn="linked" data-default-view-date="0"
+          {{ $readonly?'readonly':'data-provide=datepicker' }}>
         </div>
       </div>
       <div class="col-3"></div>
@@ -78,4 +80,6 @@
       </div>
       <div class="col-3"></div>
     </div>
+    @elseif ($appointment->status !== null)
+    <input type="hidden"  name="status" value="{{ $appointment->status }}">
     @endif

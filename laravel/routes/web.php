@@ -47,6 +47,7 @@ Route::post('/appointments', 'AppointmentsController@store')->name('appointments
 Route::get('/appointments/{appointment}', 'AppointmentsController@show')->name('appointments.show')->middleware('auth');
 Route::get('/appointments/{appointment}/edit', 'AppointmentsController@edit')->name('appointments.edit')->middleware('auth');
 Route::get('/appointments/create/{baby}', 'AppointmentsController@create')->name('appointments.create')->middleware('auth');
+Route::get('/appointments/contacted/{baby}', 'AppointmentsController@contacted')->name('appointments.contacted')->middleware('auth');
 Route::put('/appointments/{appointment}', 'AppointmentsController@update')->name('appointments.update')->middleware('auth');
 Route::delete('/appointments/{appointment}', 'AppointmentsController@cancel')->name('appointments.cancel')->middleware('auth');
 

@@ -17,5 +17,6 @@
       <div class="col-3"></div>
     </div>
   @endif
+  <a href="{{ route('babies.show', $appointment->baby) }}">&lt; Back</a>
   </div>
 @endsection

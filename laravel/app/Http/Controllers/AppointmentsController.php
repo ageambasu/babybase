@@ -12,7 +12,7 @@ class AppointmentsController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::all();
+        $appointments = Appointment::where('status', '!=', Appointment::Contacted)->get();
         return view('appointments.index', ['appointments' => $appointments]);
     }
 
@@ -29,6 +29,7 @@ class AppointmentsController extends Controller
     public function update(Request $request, Appointment $appointment)
     {
         $validatedAttributes = $request->validate(Appointment::$validationRulesUpdate);
+    	$validatedAttributes['date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validatedAttributes['date'])->format('Y-m-d');
         $appointment->update($validatedAttributes);
         return redirect(route('appointments.show', $appointment));
     }
@@ -42,9 +43,19 @@ class AppointmentsController extends Controller
                                             'all_studies' => Study::all()]);
     }
 
+    public function contacted(Baby $baby)
+    {
+        $appointment = new Appointment();
+        $appointment->baby = $baby;
+        $appointment->status = Appointment::Contacted;
+        return view('appointments.create', ['appointment' => $appointment,
+                                            'all_studies' => Study::all()]);
+    }
+
     public function store(Request $request)
     {
         $fields = $request->validate(Appointment::$validationRules);
+    	$fields['date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $fields['date'])->format('Y-m-d');
         $appointment = new Appointment($fields);
         $appointment->baby_id = (int)$fields['baby'];
         $appointment->study_id = (int)$fields['study'];

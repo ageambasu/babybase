@@ -13,16 +13,24 @@ class Appointment extends Model
     const Completed = 'Completed';
 
     const Status = [
-        Appointment::New => 'New',
-        Appointment::Canceled => 'Canceled',
-        Appointment::Contacted => 'Contacted',
-        Appointment::Completed => 'Completed'
+        Appointment::New => '📅 Scheduled',
+        Appointment::Canceled => '❌ Canceled',
+
+        // an appointment with status Contacted is not really an appointment but is used to indicate
+        // that the parents were contacted about a certain study
+        Appointment::Contacted => '📞 Contacted',
+        Appointment::Completed => '🏆 Completed'
     ];
 
 
     protected $attributes = [
         'status' => 'NEW',
         'number' => 1,
+    ];
+
+    protected $dates = ['date'];
+    protected $casts = [
+        'date' => 'datetime:d/m/Y',
     ];
 
     protected $fillable = [
@@ -32,7 +40,7 @@ class Appointment extends Model
     public static $validationRules = [
         'baby' => 'required|exists:babies,id',
         'study' => 'required|exists:studies,id',
-        'date' => 'required|date|date_format:Y-m-d',
+        'date' => 'required|date_format:d/m/Y',
         'time' => 'required',
         'status' => 'nullable',
 
@@ -40,7 +48,7 @@ class Appointment extends Model
     ];
 
     public static $validationRulesUpdate = [
-        'date' => 'required|date|date_format:Y-m-d',
+        'date' => 'required|date_format:d/m/Y',
         'time' => 'required',
         'status' => 'required',
         'notes' => 'nullable|string|min:2|max:255',
@@ -68,7 +76,7 @@ class Appointment extends Model
 
     public function editable()
     {
-        return $this->status != Appointment::Canceled;
+        return $this->status == Appointment::New;
     }
 
     public function canceled()

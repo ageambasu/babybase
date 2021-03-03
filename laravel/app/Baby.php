@@ -74,8 +74,8 @@ class Baby extends Model
     public static $validationRules = [
             //Personal information
             'name' => 'required|string|min:2|max:255',
-            'application_date' => 'required|date|date_format:d/m/Y',
-            'dob' => 'required|date|date_format:d/m/Y',
+            'application_date' => 'required|date_format:d/m/Y',
+            'dob' => 'required|date_format:d/m/Y',
             'sex' => 'required',
             'monolingual_dutch' => 'required',
             'parent_firstname' => 'required|string|min:2|max:255',
