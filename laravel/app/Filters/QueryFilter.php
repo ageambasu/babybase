@@ -46,8 +46,8 @@ abstract class QueryFilter
 
         foreach ($this->filters() as $name => $value) {
             if (method_exists($this, $name)) {
-                call_user_func_array([$this, $name], array_filter([$value]));
-                if ($value) {
+                call_user_func_array([$this, $name], [$value]);
+                if ($value !== null) {
                     $this->activeFilters[$name] = $value;
                 }
             }

@@ -128,7 +128,7 @@ class BabyFilters extends QueryFilter
      */
     public function monolingual_dutch($value = null)
     {
-        if ($value) {
+        if ($value !== null) {
             return $this->builder->where('monolingual_dutch', $value);
         }
     }
