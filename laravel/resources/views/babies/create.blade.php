@@ -29,13 +29,13 @@
 
 								@switch($fieldType)
                                                                   @case('date')
-                                                                    <input data-provide="datepicker" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }}>
+                                                                    <input data-provide="datepicker" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} data-date-end-date="0d">
                                                                     @break
 
 									@case('boolean')
 										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
 											<option value=''>Choose...</option>
-                                                                                        <option value="0"}}>No</option>
+                                                                                        <option selected value="0">No</option>
                                                                                         <option value="1"}}>Yes</option>
                                                                                 </select>
 									@break

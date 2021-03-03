@@ -31,7 +31,7 @@
 
                 @switch($fieldType)
                   @case('date')
-                    <input data-provide="datepicker" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName->format('d/m/Y') }}">
+                    <input data-provide="datepicker" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ $baby->$fieldName->format('d/m/Y') }}" data-date-end-date="0d">
                                     @break
 
 
