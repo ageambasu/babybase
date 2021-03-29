@@ -19,7 +19,7 @@
             </thead>
             @foreach ($appointments as $appointment)
               <tr>
-                <td> {{ $appointment->date }} </td>
+                <td> {{ date('d/m/Y', strtotime($appointment->date)) }} </td>
                 <td> {{ $appointment->time }} </td>
                 <td>
                   <a href="{{ route('babies.show', $appointment->baby) }}">
