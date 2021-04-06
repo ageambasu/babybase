@@ -70,7 +70,11 @@
 									@break
 
 									@default
+                                                                                @if ($fieldName == 'phone')
+                                                                                  @include('phonefield', ['value' => ''])
+                                                                                @else
 										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
+                                                                                @endif
 
 								@endswitch
 
