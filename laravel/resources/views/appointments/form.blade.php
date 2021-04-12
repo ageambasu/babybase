@@ -1,4 +1,8 @@
-    <h2>Appointment</h2>
+    @if ($appointment->status == "Contacted")
+        <h2>Log Contact</h2>
+    @else
+        <h2>Appointment</h2>
+    @endif
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
