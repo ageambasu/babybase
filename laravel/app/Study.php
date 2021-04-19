@@ -87,4 +87,16 @@ class Study extends Model
     {
         return array_keys(self::$validationRules);
     }
+
+    public function getAgeStartAttribute()
+    {
+        return implode(';', [intdiv($this->study_age_range_start, 30),
+                             $this->study_age_range_start % 30]);
+    }
+
+    public function getAgeEndAttribute()
+    {
+        return implode(';', [intdiv($this->study_age_range_end, 30),
+                             $this->study_age_range_end % 30]);
+    }
 }
