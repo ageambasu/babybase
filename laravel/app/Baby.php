@@ -45,7 +45,7 @@ class Baby extends Model
 		['house_number', 'number', '', true, false, false, false],
 		['postcode', 'text', '', true, false, false, false],
 		['city', 'text', '', true, false, true, true],
-		['recruitment_source', 'select', ['Mail', 'Website', 'Flyer consultatiebureau', 'Flyer daycare', 'Friend', 'Facebook', 'Instagram'], true, true, false, true],
+		['recruitment_source', 'select', ['Mail', 'Website', 'Flyer consultatiebureau', 'Flyer daycare', 'Friend', 'Facebook', 'Instagram'], true, false, false, true],
 
 		//Appointment information
 		['preferred_appointment_days', 'multiselect', ['None', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], true, false, false, true],
@@ -87,7 +87,7 @@ class Baby extends Model
             'house_number' =>  'nullable|numeric',
             'postcode' =>  'nullable|string|min:2|max:255',
             'city' =>  'nullable|string|min:2|max:255',
-            'recruitment_source' =>  'required',
+            'recruitment_source' =>  'nullable',
 
             'preferred_appointment_days' =>  'nullable',
             'has_sibling' =>  'nullable',
