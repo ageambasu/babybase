@@ -18,12 +18,13 @@ class Study extends Model
 	static $fieldRequiredOnForm = 4;
 	static $fieldOnIndex = 5;
     static $fieldOnFilter = 6;
-	static $fieldsOnDatabase = [
-		['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, true, true],
-		['study_name', 'text', '', true, true, true, true],
-		['study_age_range_start', 'number', '', true, true, true, true],
-		['study_age_range_end', 'number', '', true, true, true, true],
-		['notes', 'text', '', true, false, false, false],
+    static $fieldsOnDatabase = [
+        ['study_type', 'select', ['Linguistics', 'Pedagogy', 'NIRS'], true, true, true, true],
+        ['study_name', 'text', '', true, true, true, true],
+        ['study_age_range_start', 'number', '', true, true, true, true],
+        ['study_age_range_end', 'number', '', true, true, true, true],
+        ['notes', 'text', '', true, false, false, false],
+        ['ongoing', 'boolean', '', true, false, true, true],
     ];
 
     /**
@@ -37,6 +38,7 @@ class Study extends Model
             'study_age_range_start' => 'required|numeric',
             'study_age_range_end' => 'required|numeric',
             'notes' => 'nullable|string|min:2|max:255',
+            'ongoing' => 'nullable'
         ];
 
     /**
@@ -98,5 +100,10 @@ class Study extends Model
     {
         return implode(';', [intdiv($this->study_age_range_end, 30),
                              $this->study_age_range_end % 30]);
+    }
+
+    public static function ongoing()
+    {
+        return Study::where('ongoing', true)->get();
     }
 }

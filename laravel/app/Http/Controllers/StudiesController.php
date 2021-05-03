@@ -96,8 +96,6 @@ class StudiesController extends Controller
 
         $study->update($validatedAttributes);
 
-        $study->babies()->sync(request('babies'));
-
         return redirect(route('studies.show', $study));
     }
 

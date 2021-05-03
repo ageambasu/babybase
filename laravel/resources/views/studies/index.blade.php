@@ -57,7 +57,9 @@
 		    @php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
 		    @php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
 
-                    @if ($fieldName == 'study_age_range_start')
+                    @if ($fieldsOnDatabase[$i][1] == 'boolean')
+                      <td>{{ $study->$fieldName ? 'Yes':'No' }}</td>
+                    @elseif ($fieldName == 'study_age_range_start')
 		      <td>{{ $study->ageStart }}</td>
                     @elseif ($fieldName == 'study_age_range_end')
 		      <td>{{ $study->ageEnd }}</td>

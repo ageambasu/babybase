@@ -22,13 +22,17 @@
 							<span class="input-group-text">{{ $fieldNameOnForm }}</span>
 						</div>
 
-						<input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $study->$fieldName }}" readonly>
+                                                @if($fieldType == 'boolean')
+                                                  <input class="form-control" name="{{ $fieldName }}" value="{{ $study->$fieldName?'Yes':'No' }}" readonly>
+                                                @else
+                                                  <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $study->$fieldName }}" readonly>
+                                                @endif
 
 					</div>
 				</div>
 				<div class="col-3"></div>
 			</div>
-			
+
 		@endfor
 
 		<br>

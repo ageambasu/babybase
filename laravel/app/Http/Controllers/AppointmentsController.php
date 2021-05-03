@@ -40,7 +40,7 @@ class AppointmentsController extends Controller
         $appointment = new Appointment();
         $appointment->baby = $baby;
         return view('appointments.create', ['appointment' => $appointment,
-                                            'all_studies' => Study::all()]);
+                                            'all_studies' => Study::ongoing()]);
     }
 
     public function contacted(Baby $baby)
@@ -49,7 +49,7 @@ class AppointmentsController extends Controller
         $appointment->baby = $baby;
         $appointment->status = Appointment::Contacted;
         return view('appointments.create', ['appointment' => $appointment,
-                                            'all_studies' => Study::all()]);
+                                            'all_studies' => Study::ongoing()]);
     }
 
     public function store(Request $request)
