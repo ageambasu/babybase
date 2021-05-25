@@ -78,7 +78,6 @@ class Baby extends Model
             'dob' => 'required|date_format:d/m/Y',
             'sex' => 'required',
             'monolingual_dutch' => 'required',
-            'has_sibling' => 'required',
             'parent_firstname' => 'required|string|min:2|max:255',
             'parent_lastname' => 'required|string|min:2|max:255',
             'phone' =>  'nullable|string',

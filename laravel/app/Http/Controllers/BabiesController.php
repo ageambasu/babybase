@@ -92,6 +92,10 @@ class BabiesController extends Controller
             $request['phone'] = str_replace(['-', '+', ' '], '', $request['phone']);
         }
 
+        if (is_null($request['has_sibling'])) {
+            $request['has_sibling'] = false;
+        }
+
         $validated = $this->validateBaby();
     	$validated['application_date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['application_date'])->format('Y-m-d');
     	$validated['dob'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validated['dob'])->format('Y-m-d');
