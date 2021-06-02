@@ -44,6 +44,9 @@
                       @endforeach
                     </select>
                                     @break
+                    @case('notes')
+                      <textarea class="form-control" readonly>{{ $baby->notes }}</textarea>
+                      @break
                     @default
                     <input type="{{ $fieldType }}" class="form-control" name="{{ $fieldName }}" value="{{ $baby->$fieldName }}" readonly>
               @endswitch
