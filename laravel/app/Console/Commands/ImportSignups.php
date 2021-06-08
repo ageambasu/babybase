@@ -109,6 +109,7 @@ class ImportSignups extends Command
             'notes' => 'Languages: ' . $fields['languages'] . "\n\nNotes: " . $fields['notes'],
             'sex' => ['jongen' => 'Male', 'meisje' => 'Female', 'boy' => 'Male', 'girl' => 'Female'][$fields['gender']],
             'application_date' => \Carbon\Carbon::now(),
+            'recruitment_source' => $fields['recruitment_source'],
         ];
         return $validated;
 
