@@ -64,7 +64,7 @@ class ImportSignups extends Command
 
                 try {
                     //Get the body of the email.
-                    $message = imap_base64(imap_fetchbody($this->mbox, $email, 1, FT_PEEK|FT_UID));
+                    $message = imap_qprint(imap_fetchbody($this->mbox, $email, 1, FT_PEEK|FT_UID));
                     $fields = $this->parse_email($message, $subject);
                     $baby = Baby::create($this->validate($fields));
 
@@ -126,7 +126,7 @@ class ImportSignups extends Command
     }
 
     protected function parse_email($message, $subject) {
-        $lines = explode("\r\n", $message);
+        $lines = array_map('trim', explode("\r\n", $message));
         $nonempty = array_values(array_filter($lines));
 
         if (strstr($subject, 'babylab-leiden-en') !== false) {
@@ -141,7 +141,7 @@ class ImportSignups extends Command
                 'phone' => $this->find_field($nonempty, 'Telephone number'),
                 'email' => $this->find_field($nonempty, 'Email'),
                 'multilingual' => $this->find_field($nonempty, 'Is your child raised:'),
-                'languages' => $this->find_field($nonempty, 'With which languages is your child being raised?'),
+                'languages' => $this->find_field($nonempty, 'With which languages is your child being raised?', true),
                 'notes' => $this->find_field($nonempty, 'Questions and/or remarks', true),
                 'recruitment_source' => $this->find_field($nonempty, 'Where did you first hear about the Babylab?')
             ];
@@ -158,7 +158,7 @@ class ImportSignups extends Command
                 'phone' => $this->find_field($nonempty, 'Telefoonnummer'),
                 'email' => $this->find_field($nonempty, 'E-mailadres'),
                 'multilingual' => $this->find_field($nonempty, 'Hoe wordt uw baby opgevoed?'),
-                'languages' => $this->find_field($nonempty, 'Met welke talen wordt uw baby opgevoed?'),
+                'languages' => $this->find_field($nonempty, 'Met welke talen wordt uw baby opgevoed?', true),
                 'notes' => $this->find_field($nonempty, 'Vragen en/of opmerkingen', true),
                 'recruitment_source' => $this->find_field($nonempty, 'Hoe bent u terecht gekomen bij Babylab?')
             ];
