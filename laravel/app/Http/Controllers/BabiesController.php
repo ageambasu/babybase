@@ -222,9 +222,16 @@ class BabiesController extends Controller
      */
     public function destroy($id)
     {
-        Baby::where('id', $id)->delete();
+        // check if baby was approved so that we can redirect to signups page if necessary
+        $baby = Baby::where('id', $id)->first();
+        $approved = $baby->approved;
 
-        return redirect(route('babies.index'))->with('success','Baby deleted successfully.');
+        $baby->delete();
+
+        if ($approved) {
+            return redirect(route('babies.index'))->with('success','Baby deleted successfully.');
+        }
+        return redirect(route('signups.index'))->with('success','Baby deleted successfully.');
     }
 
     /**
