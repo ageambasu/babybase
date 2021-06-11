@@ -1,71 +1,78 @@
 @extends ('layout')
 
 @section ('content')
-	<form class="text-center" method="POST" action="{{ route('studies.index') }}">
-		@csrf
+  <form class="text-center" method="POST" action="{{ route('studies.index') }}">
+    @csrf
 
-		<div class="container">
+    <div class="container">
 
-			@for ($i = 0; $i < count($fieldsOnDatabase); $i++)
+      @for ($i = 0; $i < count($fieldsOnDatabase); $i++)
 
-				@php ($fieldName = $fieldsOnDatabase[$i][0])
-				@php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
-				@php ($fieldType = $fieldsOnDatabase[$i][1])
-				@php ($fieldValues = $fieldsOnDatabase[$i][2])
-				@php ($fieldOnForm = $fieldsOnDatabase[$i][3])
-				@php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
-				@php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
-				@php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
-				
-				@if ($fieldOnForm)
+        @php ($fieldName = $fieldsOnDatabase[$i][0])
+        @php ($fieldNameOnForm = ucfirst(str_replace ("_", " ", $fieldName)))
+        @php ($fieldType = $fieldsOnDatabase[$i][1])
+        @php ($fieldValues = $fieldsOnDatabase[$i][2])
+        @php ($fieldOnForm = $fieldsOnDatabase[$i][3])
+        @php ($fieldRequiredOnForm = $fieldsOnDatabase[$i][4])
+        @php ($fieldOnIndex = $fieldsOnDatabase[$i][5])
+        @php ($fieldOnFilter = $fieldsOnDatabase[$i][6])
 
-					<div class="row">
-						<div class="col-3"></div>
-						<div class="col-6">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">{{ $fieldNameOnForm }}</span>
-								</div>
+        @if ($fieldOnForm)
 
-								@switch($fieldType)
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">{{ $fieldNameOnForm }}</span>
+                </div>
 
-									@case('select')
-										<select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
-											<option value=''>Choose...</option>
+                @switch($fieldType)
 
-											@foreach($fieldValues as $key => $fieldValue)
+                  @case('boolean')
+                    <select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+                      <option value=''>Choose...</option>
+                      <option selected value="0">No</option>
+                      <option value="1"}}>Yes</option>
+                    </select>
+                  @break
+                    @case('select')
+                      <select class="custom-select form-control @error($fieldName) is-invalid @enderror" {{ (($fieldRequiredOnForm) ? "required":"") }} name="{{ $fieldName }}">
+                        <option value=''>Choose...</option>
 
-												<option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
+                        @foreach($fieldValues as $key => $fieldValue)
 
-											@endforeach
+                          <option value="{{ $fieldValue }}">{{ $fieldValue }}</option>
 
-										</select>
-									@break
+                        @endforeach
 
-									@default
-										<input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
-								
-								@endswitch
+                      </select>
+                                        @break
 
-								@error($fieldName)
-									<div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
-								@enderror
-							</div>
-						</div>
-						<div class="col-3"></div>
-					</div>
+                      @default
+                      <input type="{{ $fieldType }}" class="form-control @error($fieldName) is-invalid @enderror" name="{{ $fieldName }}" placeholder="{{ $fieldNameOnForm }}" {{ (($fieldRequiredOnForm) ? "required":"") }} value="{{ old($fieldName) }}">
 
-				@endif
-				
-			@endfor
+                @endswitch
 
-			<div class="row mt-4">
-				<div class="col-3"></div>
-				<div class="col-6">
-					<button class="btn btn-lg btn-outline-primary btn-block" type="submit">Submit</button>
-				</div>
-				<div class="col-3"></div>
-			</div>
-		</div>
-	</form>
+                @error($fieldName)
+                <div class="invalid-feedback">{{ $errors->first($fieldName) }}</div>
+                @enderror
+              </div>
+            </div>
+            <div class="col-3"></div>
+          </div>
+
+        @endif
+
+      @endfor
+
+      <div class="row mt-4">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Submit</button>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </form>
 @endsection
