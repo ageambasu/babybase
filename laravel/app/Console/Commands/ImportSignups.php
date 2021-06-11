@@ -64,7 +64,7 @@ class ImportSignups extends Command
 
                 try {
                     //Get the body of the email.
-                    $message = imap_qprint(imap_fetchbody($this->mbox, $email, 1, FT_PEEK|FT_UID));
+                    $message = utf8_encode(imap_qprint(imap_fetchbody($this->mbox, $email, 1, FT_PEEK|FT_UID)));
                     $fields = $this->parse_email($message, $subject);
                     $baby = Baby::create($this->validate($fields));
 
