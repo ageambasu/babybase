@@ -279,9 +279,21 @@ class BabyFilters extends QueryFilter
     public function search($value = null)
     {
         if ($value) {
-            return $this->builder->where(
-                'name', 'like', '%'.$value.'%')->orWhere(
-                    'parent_lastname', 'like', '%'.$value.'%');
+            $results = $this->builder
+                ->where('id', '=', $value)
+                ->orWhere('name', 'like', '%'.$value.'%')
+                ->orWhere('parent_lastname', 'like', '%'.$value.'%');
+
+            if (strlen($value) >= 6) {
+                $phone = $value;
+                $phone = preg_replace('/^0/', '', $phone);
+                $phone = str_replace('+', '', $phone);
+                $phone = str_replace('-', '', $phone);
+
+                $results = $results->orWhere('phone', 'like', '%'.$phone.'%');
+            }
+
+            return $results;
         }
     }
 }
