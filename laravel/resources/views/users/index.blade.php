@@ -58,7 +58,6 @@
 									<td>
 										<form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete the selected record?');">
 
-											<a href="{{ route('users.show', $user) }}" class="btn btn-outline-info" role="button"><i class="fas fa-eye"></i> View</a>
 											<a href="{{ route('users.edit', $user) }}" class="btn btn-outline-info" role="button"><i class="far fa-edit"></i> Edit</a>
 
 											@csrf
@@ -84,6 +83,7 @@
 			</div>
 		</div>
 
+                @if (false)
 		<div class="row">
 			<div class="col">
 				<a href="{{route('users.create')}}" class="btn btn-outline-info mb-4" role="button">
@@ -91,6 +91,7 @@
 				</a>
 			</div>
 		</div>
+                @endif
 
 	</div>
 @endsection

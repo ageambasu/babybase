@@ -26,6 +26,7 @@ class User extends Authenticatable
         ['name', 'text', '', true, true, true, false],
         ['email', 'email', '', true, true, true, false],
         ['isAdmin', 'checkbox', '', true, false, true, false],
+        ['active', 'checkbox', '', true, false, true, false],
     ];
 
     /**
@@ -34,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'ulcn_uid', 'name', 'email', 'password', 'isAdmin',
+        'ulcn_uid', 'name', 'email', 'password', 'isAdmin', 'active'
     ];
 
     /**

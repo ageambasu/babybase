@@ -57,6 +57,7 @@ class UsersController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'isAdmin' => $request['isAdmin'],
+            'active' => $request['active'],
         ]);
         Mail::to($request['email'])->send(new NewUserMail($user));
 
@@ -98,6 +99,7 @@ class UsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id . ',id',
             'isAdmin' => 'boolean',
+            'active' => 'boolean',
         ]);
 
         $user->update($validatedAttributes);
