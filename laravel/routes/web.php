@@ -13,6 +13,8 @@
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/oauth', 'Auth\LoginController@oauth')->name('login.oauth');
+Route::get('/pending', 'HomeController@pending')->name('home.pending');
 
 Route::get('/babies/filter', 'BabiesController@filter')->name('babies.filter')->middleware('auth');
 

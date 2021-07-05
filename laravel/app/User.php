@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'isAdmin',
+        'ulcn_uid', 'name', 'email', 'password', 'isAdmin',
     ];
 
     /**
@@ -61,7 +61,7 @@ class User extends Authenticatable
      * @return boolean
      */
     public function isAdmin()
-    {   
+    {
         return (\Auth::check() && $this->isAdmin == TRUE);
     }
 
