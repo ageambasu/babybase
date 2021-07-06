@@ -1,7 +1,7 @@
 @extends ('layout')
 
 @section ('content')
-    <form class="form-signin text-center" method="POST" action="{{ route('login') }}">
+    <form class="form-signin text-center" method="POST" action="{{ route('login.old') }}">
         @csrf
 
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
