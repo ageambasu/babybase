@@ -291,6 +291,7 @@ class BabyFilters extends QueryFilter
                 $phone = str_replace('-', '', $phone);
 
                 $results = $results->orWhere('phone', 'like', '%'.$phone.'%');
+                $results = $results->orWhere('phone_2', 'like', '%'.$phone.'%');
             }
 
             return $results;

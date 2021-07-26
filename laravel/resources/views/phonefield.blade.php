@@ -1,8 +1,15 @@
-<input type="tel" name="phone_main" id="phone" value="{{ $value }}">
+<input type="tel" name="phone_{{ $name }}" id="{{ $name }}" value="{{ $value }}">
 <script>
- const input = document.querySelector("#phone");
- intlTelInput(input, {customContainer:'form-control', initialCountry: 'nl', hiddenInput: 'phone',
+ (function() {
+ let input = document.querySelector("#{{ $name }}");
+ intlTelInput(input, {customContainer:'form-control',
+                      initialCountry: 'nl',
+                      hiddenInput: '{{ $name }}',
+                      customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+                          return "e.g. " + selectedCountryPlaceholder;
+                      },
                       utilsScript:"{{ asset('js/itiUtils.js') }}" });
+ })();
 </script>
 <style>
  .iti input {
