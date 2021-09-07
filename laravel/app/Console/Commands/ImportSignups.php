@@ -137,7 +137,7 @@ class ImportSignups extends Command
                 'parent_last_name' => $this->find_field($nonempty, 'Your last name'),
                 'baby_name' => $this->find_field($nonempty, 'Name of your child'),
                 'dob' => $this->find_field($nonempty, 'Date of birth of your child'),
-                'dob_format' => 'd/m/Y',
+                'dob_format' => 'm/d/Y',
                 'gender' => $this->find_field($nonempty, 'Gender of your child'),
                 'phone' => $this->find_field($nonempty, 'Telephone number'),
                 'email' => $this->find_field($nonempty, 'Email'),
