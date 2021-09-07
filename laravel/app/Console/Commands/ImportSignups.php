@@ -99,6 +99,7 @@ class ImportSignups extends Command
 
     protected function validate($fields) {
         $validated = [
+            'application_date' => \Carbon\Carbon::now(),
             'name' => $fields['baby_name'],
             'parent_firstname' => $fields['parent_first_name'],
             'parent_lastname' => $fields['parent_last_name'],
@@ -108,9 +109,14 @@ class ImportSignups extends Command
             'dob' => \Carbon\Carbon::createFromFormat($fields['dob_format'], $fields['dob']),
             'notes' => 'Languages: ' . $fields['languages'] . "\n\nNotes: " . $fields['notes'],
             'sex' => ['jongen' => 'Male', 'meisje' => 'Female', 'boy' => 'Male', 'girl' => 'Female'][$fields['gender']],
-            'application_date' => \Carbon\Carbon::now(),
             'recruitment_source' => $fields['recruitment_source'],
         ];
+
+        // carbon doesn't throw exception on format error
+        $carbonErr = \Carbon\Carbon::getLastErrors();
+        if ($carbonErr['warning_count'] > 0 || $carbonErr['error_count'] > 0) {
+            throw new \Exception('Bad date format, failed parsing');
+        }
         return $validated;
 
     }
