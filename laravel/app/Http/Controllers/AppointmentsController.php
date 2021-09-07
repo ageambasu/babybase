@@ -23,7 +23,8 @@ class AppointmentsController extends Controller
 
     public function edit(Appointment $appointment)
     {
-        return view('appointments.edit', ['appointment' => $appointment]);
+        return view('appointments.edit', ['appointment' => $appointment,
+                                          'all_studies' => Study::ongoing()]);
     }
 
     public function update(Request $request, Appointment $appointment)
@@ -31,6 +32,8 @@ class AppointmentsController extends Controller
         $validatedAttributes = $request->validate(Appointment::$validationRulesUpdate);
     	$validatedAttributes['date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validatedAttributes['date'])->format('Y-m-d');
         $appointment->update($validatedAttributes);
+        $appointment->study_id = (int)$validatedAttributes['study'];
+        $appointment->save();
         return redirect(route('appointments.show', $appointment));
     }
 

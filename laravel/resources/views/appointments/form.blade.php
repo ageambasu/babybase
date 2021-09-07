@@ -24,12 +24,15 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Study</span>
           </div>
-          @if ($appointment->study)
-            <input class="form-control" value="{{ $appointment->study->study_name }}" readonly>
+          @if ($readonly)
+            <select class="form-control" name="study" readonly>
+              <option value="{{ $appointment->study->id }}">{{ $appointment->study->study_name }}</option>
+            </select>
           @else
             <select class="form-control" name="study">
+                <option value="">Choose study...</option>
             @foreach ($all_studies as $study)
-              <option value="{{ $study->id }}">{{ $study->study_name }}</option>
+                <option value="{{ $study->id }}" {{ $appointment->study==$study?'selected':'' }} >{{ $study->study_name }}</option>
             @endforeach
             </select>
           @endif

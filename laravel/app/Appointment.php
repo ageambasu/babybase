@@ -49,6 +49,7 @@ class Appointment extends Model
 
     public static $validationRulesUpdate = [
         'date' => 'required|date_format:d/m/Y',
+        'study' => 'required|exists:studies,id',
         'time' => 'required',
         'status' => 'required',
         'notes' => 'nullable|string|min:2|max:255',
