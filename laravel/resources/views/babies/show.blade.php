@@ -72,6 +72,11 @@
             @csrf
             <button type="submit" style="margin-top:7px" class="btn btn-lg btn-outline-info btn-block" role="button"><i class="far fa-check-circle"></i> Approve Signup</button>
           </form>
+          <form action="{{ route('signups.reject', $baby) }}" method="post">
+            @method('DELETE')
+            @csrf
+            <button type="submit" style="margin-top:7px" class="btn btn-lg btn-outline-danger btn-block" role="button"><i class="fas fa-ban"></i> Reject Signup</button>
+          </form>
         </div>
         <div class="col-3"></div>
       @endif

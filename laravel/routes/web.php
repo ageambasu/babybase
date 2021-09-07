@@ -29,6 +29,7 @@ Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update')->
 Route::delete('/babies/{baby}', 'BabiesController@destroy')->name('babies.destroy')->middleware('isAdmin');
 Route::get('/signups', 'BabiesController@signups')->name('signups.index')->middleware('auth');
 Route::put('/signups/{baby}', 'BabiesController@signupApprove')->name('signups.approve')->middleware('auth');
+Route::delete('/signups/{baby}', 'BabiesController@signupReject')->name('signups.reject')->middleware('auth');
 
 Route::get('/studies', 'StudiesController@index')->name('studies.index')->middleware('auth');
 Route::post('/studies', 'StudiesController@store')->name('studies.store')->middleware('auth');

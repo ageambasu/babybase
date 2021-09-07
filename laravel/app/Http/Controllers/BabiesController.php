@@ -333,4 +333,15 @@ class BabiesController extends Controller
         $baby->save();
         return redirect(route('babies.show', $baby));
     }
+
+    public function signupReject(Baby $baby)
+    {
+        // this is a separate delete action that is open to all users but is limited to babies that
+        // were not already approved
+        if (!$baby->approved) {
+            $baby->delete();
+
+            return redirect(route('signups.index'))->with('success','Baby deleted successfully.');
+        }
+    }
 }
