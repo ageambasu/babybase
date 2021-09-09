@@ -7,6 +7,7 @@ use App\Language;
 use App\Study;
 use App\Filters\BabyFilters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BabiesController extends Controller
 {
@@ -223,12 +224,23 @@ class BabiesController extends Controller
     public function destroy($id)
     {
         // check if baby was approved so that we can redirect to signups page if necessary
-        $baby = Baby::where('id', $id)->first();
+        $baby = Baby::withTrashed()->where('id', $id)->first();
         $approved = $baby->approved;
+        $trashed = $baby->trashed();
 
-        $baby->delete();
+        if ($trashed && Auth::user()->isAdmin()) {
+            // hard delete
+            $baby->forceDelete();
+        }
+        else {
+            // soft delete
+            $baby->delete();
+        }
 
-        if ($approved) {
+        if ($trashed) {
+            return redirect(route('archive.index'))->with('success','Baby deleted successfully.');
+        }
+        else if ($approved) {
             return redirect(route('babies.index'))->with('success','Baby deleted successfully.');
         }
         return redirect(route('signups.index'))->with('success','Baby deleted successfully.');
@@ -343,5 +355,16 @@ class BabiesController extends Controller
 
             return redirect(route('signups.index'))->with('success','Baby deleted successfully.');
         }
+    }
+
+    public function archive()
+    {
+        $results = Baby::onlyTrashed();
+        return view ('babies.index', ['archive' => true,
+                                      'babies' => $results->paginate(10),
+                                      'total' => $results->count(),
+                                      'fieldsOnDatabase' => Baby::$fieldsOnDatabase,
+                                      'activeFilters' => []]);
+
     }
 }

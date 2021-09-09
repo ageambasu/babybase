@@ -80,6 +80,11 @@
                                             <a class="nav-link" href="{{route('languages.index')}}">Languages</a>
                                         </li>
                                     @endif
+                                    @if (Auth::user()->isAdmin())
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('archive.index')}}">Archive</a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>

@@ -12,7 +12,7 @@ class AppointmentsController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::where('status', '!=', Appointment::Contacted)->orderBy('date')->get();
+        $appointments = Appointment::where('status', '!=', Appointment::Contacted)->has('baby')->orderBy('date')->get();
         return view('appointments.index', ['appointments' => $appointments]);
     }
 
