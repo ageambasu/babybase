@@ -5,10 +5,12 @@ namespace App;
 use App\Appointment;
 use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Baby extends Model
 {
+    use SoftDeletes;
     protected $dates = ['application_date', 'dob'];
     protected $casts = [
         'dob' => 'datetime:d/m/Y',

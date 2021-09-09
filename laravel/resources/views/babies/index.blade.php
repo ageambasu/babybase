@@ -118,9 +118,7 @@
 
                                             @csrf
                                             @method('DELETE')
-                                            @if (Auth::user()->isAdmin())
-                                                <button class="btn btn-outline-danger" role="button" type="submit"><i class="fas fa-ban"></i> Delete</button>
-                                            @endif
+                                            <button class="btn btn-outline-danger" role="button" type="submit"><i class="fas fa-ban"></i> Delete</button>
                                         </form>
                                     </td>
                                 </tr>

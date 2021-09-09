@@ -26,7 +26,7 @@ Route::get('/babies/create', 'BabiesController@create')->name('babies.create')->
 Route::get('/babies/{baby}', 'BabiesController@show')->name('babies.show')->middleware('auth');
 Route::get('/babies/{baby}/edit', 'BabiesController@edit')->name('babies.edit')->middleware('auth');
 Route::put('/babies/{baby}', 'BabiesController@update')->name('babies.update')->middleware('auth');
-Route::delete('/babies/{baby}', 'BabiesController@destroy')->name('babies.destroy')->middleware('isAdmin');
+Route::delete('/babies/{baby}', 'BabiesController@destroy')->name('babies.destroy')->middleware('auth');
 Route::get('/signups', 'BabiesController@signups')->name('signups.index')->middleware('auth');
 Route::put('/signups/{baby}', 'BabiesController@signupApprove')->name('signups.approve')->middleware('auth');
 Route::delete('/signups/{baby}', 'BabiesController@signupReject')->name('signups.reject')->middleware('auth');
