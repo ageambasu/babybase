@@ -9,10 +9,12 @@
   </a>
   </p>
 
-  <p>
-  <a href="{{ route('login.old_form') }}">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">{{ __('Sign in with password') }}</button>
-  </a>
-  </p>
+  @if (config('oauth.allow_password_login'))
+    <p>
+    <a href="{{ route('login.old_form') }}">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{ __('Sign in with password') }}</button>
+    </a>
+    </p>
+  @endif
   </div>
 @endsection

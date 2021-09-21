@@ -15,8 +15,10 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/oauth', 'Auth\LoginController@oauth')->name('login.oauth');
 Route::get('/pending', 'HomeController@pending')->name('home.pending');
-Route::get('/login_old', 'Auth\OldLoginController@showLoginForm')->name('login.old_form');
-Route::post('/login_old', 'Auth\OldLoginController@login')->name('login.old');
+if (config('oauth.allow_password_login')) {
+    Route::get('/login_old', 'Auth\OldLoginController@showLoginForm')->name('login.old_form');
+    Route::post('/login_old', 'Auth\OldLoginController@login')->name('login.old');
+}
 
 Route::get('/babies/filter', 'BabiesController@filter')->name('babies.filter')->middleware('auth');
 

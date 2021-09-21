@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'allow_password_login' =>      env('ALLOW_PASSWORD_LOGIN'),
     'client_id' =>                 env('OAUTH_CLIENT_ID'),
     'client_secret' =>             env('OAUTH_CLIENT_SECRET'),
     'auth_url' =>                  env('OAUTH_AUTH_URL'),
